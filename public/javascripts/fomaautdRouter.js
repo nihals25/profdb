@@ -25,3 +25,15 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', function($sco
 	};
 	$scope.workExp;
 }]);
+
+fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
+	$scope.loggedin = false;            
+    var User = $resource('/api/authentication');
+    User.get({}, function(user) {            
+        if(user.user != null && user.user.username != undefined && user.user.username != null && user.user.username != '') {
+            $scope.username = user.user.username;
+            $scope.loggedin = true;                                                       
+        }
+    });       
+         
+}]);

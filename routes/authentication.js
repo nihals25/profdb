@@ -27,7 +27,8 @@ router.post('/userexists', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-    Account.register(new Account({ username : req.body.username, email : req.body.email, phone : req.body.phone, isadmin : false }), req.body.password, function(err, account) {        
+  console.log(req);
+    Account.register(new Account({ username : req.body.username, email : req.body.email }), req.body.password, function(err, account) {        
         if (err) {
             return res.render('register', { account : account });
         }
