@@ -9,15 +9,15 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/login.html'		
 		})
 		.when('/register', {
-			templateUrl: 'partials/register.html',
-			controller: 'registerController'
+			templateUrl: 'partials/signup.html',
+			controller: 'signupController'
 		})
 		.otherwise({
 			redirectTo: '/'
 		});
 }]);
 
-fomaautdapp.controller('registerController', ['$scope', '$resource', function($scope, $resource) {
+fomaautdapp.controller('signupController', ['$scope', '$resource', function($scope, $resource) {
 	var counter = 1;
 	$scope.workExpCount = [1];	
 	$scope.addworkexperience = function () {
