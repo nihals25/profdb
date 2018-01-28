@@ -39,7 +39,8 @@ passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
-mongoose.connect('mongodb://localhost:27017/passport_local_mongoose_express4');
+mongoose.connect('mongodb://fomaautd:fomaa@utd2018@mongodb/passport_local_mongoose_express4');
+//mongodb://fomaautd:fomaa@utd2018@mongodb/fomaautd
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
