@@ -47,7 +47,11 @@ body a{
    padding:10px 15px;
 }
 .navbar-brand-height {
-    height: 450% !important;
+    height: 550% !important;
+}
+.navbar-brand-height2 {
+    height: 100%;
+    padding: 0% 50%;
 }
 .navbar-nav > li > a {
    padding:10px 15px;
