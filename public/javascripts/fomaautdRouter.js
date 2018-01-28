@@ -12,6 +12,9 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/signup.html',
 			controller: 'signupController'
 		})
+		.when('/home', {
+			templateUrl: 'partials/register.html'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
