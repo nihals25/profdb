@@ -22,12 +22,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="single">  
 	   <div class="form-container">
         <h2>Register Form</h2>
-        <form>
+        <form action="/api/home/adduser" method="post">
 	        <div class="row">
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="firstName">First Name</label>
 	                <div class="col-md-9">
-	                    <input type="text" path="firstName" id="firstName" class="form-control input-sm"/>
+	                    <input type="text" path="firstName" name="firstName" class="form-control input-sm"/>
 	                </div>
 	            </div>
 	        </div>
@@ -35,7 +35,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="lastName">Last Name</label>
 	                <div class="col-md-9">
-	                    <input type="text" path="lastName" id="lastName" class="form-control input-sm"/>
+	                    <input type="text" path="lastName" name="lastName" class="form-control input-sm"/>
 	                </div>
 	            </div>
 	        </div>
@@ -43,7 +43,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="dateofjoining">Date of Joining UTD</label>
 	                <div class="col-md-9">
-	                    <input type="date" path="dateofjoining" id="dateofjoining" class="form-control input-sm"/>
+	                    <input type="date" path="dateofjoining" name="dateofjoining" class="form-control input-sm"/>
 	                </div>
 	            </div>
 	        </div>

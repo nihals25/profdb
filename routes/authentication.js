@@ -2,7 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var Account = require('../models/user');
 var router = express.Router();
-global.userid="";
+global.username="";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -33,7 +33,7 @@ router.post('/register', function(req, res) {
         }
 
         passport.authenticate('local')(req, res, function () {          
-          res.redirect('/');
+          res.redirect('/home');
         });
     });
 });
@@ -60,8 +60,8 @@ router.post('/login', function(req, res, next) {
                     message: "Login Failure!"
                 })
             }
-            res.redirect('/');
-            global.userid = req.body.username;            
+            res.redirect('/#/home');
+            global.username = req.body.username;            
         });
     })(req, res, next);
 });
