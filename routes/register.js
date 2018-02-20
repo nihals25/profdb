@@ -31,7 +31,8 @@ router.post('/adduser', function(req, res) {
 			disability: req.body.disability,
 			veteran: req.body.veteran,
 			linkedin: req.body.linkedin,
-			portfolio: req.body.portfolio		
+			portfolio: req.body.portfolio,
+			isauthenticated: false		
 		}, function(err, userObj) {
 			if (err) throw err;
 			res.json({success: true, message: 'Student details added successfully'});
