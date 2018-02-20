@@ -22,21 +22,26 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
-	$scope.loggedin = false;            
-    var User = $resource('/api/authentication');
-    User.get({}, function(user) {            
-        if(user.user != null && user.user.username != undefined && user.user.username != null && user.user.username != '') {
-            $scope.username = user.user.username;
-            $scope.loggedin = true;                                                       
+	$scope.loggedin = false;            	
+    var User = $resource('/api/authentication');    
+    User.get({}, function(response) {            
+        if(response != null && response.result != undefined && response.result != null && 
+        	response.username != undefined && response.username != null && response.username != '') {
+            $scope.username = response.username;
+            $scope.loggedin = true;   
+            $scope.liArray =  response.result;                                                   
         }
-    });        
+    });
+    $scope.toggleItem = function(event) {    	
+    	$(event.target.parentElement).toggleClass('open');    	   
+    };        
 }]);
 
 fomaautdapp.controller('signupController', ['$scope', '$resource', function($scope, $resource) {
 
 }]);
 
-fomaautdapp.controller('registerController', ['$scope', '$resource', function($scope, $resource) {	
+fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {	
 	$scope.userDetails = {
 		firstname: '',
 		lastname: '',
@@ -69,6 +74,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', function($s
 		users.save($scope.userDetails, function(response) {
 			if(response.success) {
 				alert(response.message);
+				$window.location.href = '/#/home';
 			}
 			else {
 				alert(response.message);

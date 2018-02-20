@@ -6,7 +6,31 @@ global.user={};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.json({ user : req.user });
+  if(global.user != undefined && global.user._id != undefined && global.user._id != '') {
+    var resultArray = [
+      {
+        href: "/#/update",
+        tag: 'Update Details' 
+      }, 
+      {
+        href: "/#/resume",
+        tag: 'Add/Update Resume' 
+      },
+    ];    
+    if(global.user.isadmin) {
+      resultArray.push(
+        {
+          href: "/#/authenticate",
+          tag: 'Authenticate User'
+        });
+    }
+    resultArray.push(
+    {
+      href: "/api/authentication/logout",
+      tag: 'Logout'
+    });
+    res.json({result: resultArray, username: global.user.username});
+  }  
 });
 
 router.get('/signup', function(req, res) {
@@ -41,7 +65,7 @@ router.post('/update', function(req, res) {
 });
 
 router.post('/signup', function(req, res) {  
-    Account.register(new Account({ username : req.body.username, email : req.body.email, isregistered: false }), req.body.password, function(err, account) {        
+    Account.register(new Account({ username : req.body.username, email : req.body.email, isregistered: false, isadmin: false }), req.body.password, function(err, account) {        
         if (err) {
             return res.render('register', { account : account });
         }
@@ -84,9 +108,9 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res) {
-      //global.userid = '';
+      global.user={};
       req.logout();
-      res.redirect('/');
+      res.redirect('/#/login');
 });
 
 router.get('/ping', function(req, res){
