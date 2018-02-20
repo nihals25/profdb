@@ -20,6 +20,10 @@ body a{
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
+.register-bolds {
+    font-weight: bold !important;
+    text-decoration: underline !important;
+}
 .navbar-default {
     background-color: #f15f43 !important;
     border-color: #f15f43;

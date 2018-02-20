@@ -2,14 +2,14 @@ var express = require('express');
 var passport = require('passport');
 var Account = require('../models/user');
 var router = express.Router();
-global.username="";
+global.user={};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.json({ user : req.user });
 });
 
-router.get('/register', function(req, res) {
+router.get('/signup', function(req, res) {
       res.render('register', { });
 });
 
@@ -26,14 +26,28 @@ router.post('/userexists', function(req, res) {
     });    
 });
 
-router.post('/register', function(req, res) {  
-    Account.register(new Account({ username : req.body.username, email : req.body.email }), req.body.password, function(err, account) {        
+router.post('/update', function(req, res) {
+    Account.findOne({username : global.user.username}, function(err, account) {
+        if(err) throw err;
+        Account.update({
+          username: global.user.username
+        },{
+          $set: {isregistered: true}
+        }, function(err, acc) {
+          if(err) throw err;
+          res.json(true);
+        });          
+    });
+});
+
+router.post('/signup', function(req, res) {  
+    Account.register(new Account({ username : req.body.username, email : req.body.email, isregistered: false }), req.body.password, function(err, account) {        
         if (err) {
             return res.render('register', { account : account });
         }
 
         passport.authenticate('local')(req, res, function () {          
-          res.redirect('/home');
+          res.redirect('/#/register');
         });
     });
 });
@@ -59,9 +73,12 @@ router.post('/login', function(req, res, next) {
                 return res.json({
                     message: "Login Failure!"
                 })
-            }
-            res.redirect('/#/home');
-            global.username = req.body.username;            
+            }            
+            if(user.isregistered)
+              res.redirect('/#/home');
+            else 
+              res.redirect('/#/register');
+            global.user = user;                    
         });
     })(req, res, next);
 });

@@ -8,25 +8,17 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 		.when('/login', {
 			templateUrl: 'partials/login.html'		
 		})
-		.when('/register', {
+		.when('/signup', {
 			templateUrl: 'partials/signup.html',
 			controller: 'signupController'
 		})
-		.when('/home', {
-			templateUrl: 'partials/register.html'
+		.when('/register', {
+			templateUrl: 'partials/register.html',
+			controller: 'registerController'
 		})
 		.otherwise({
 			redirectTo: '/'
 		});
-}]);
-
-fomaautdapp.controller('signupController', ['$scope', '$resource', function($scope, $resource) {
-	var counter = 1;
-	$scope.workExpCount = [1];	
-	$scope.addworkexperience = function () {
-		$scope.workExpCount.push(++counter);
-	};
-	$scope.workExp;
 }]);
 
 fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
@@ -37,6 +29,13 @@ fomaautdapp.controller('headerController', ['$scope', '$resource', function($sco
             $scope.username = user.user.username;
             $scope.loggedin = true;                                                       
         }
-    });       
-         
+    });        
+}]);
+
+fomaautdapp.controller('signupController', ['$scope', '$resource', function($scope, $resource) {
+
+}]);
+
+fomaautdapp.controller('registerController', ['$scope', '$resource', function($scope, $resource) {
+
 }]);
