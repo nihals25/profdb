@@ -36,6 +36,43 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', function($sco
 
 }]);
 
-fomaautdapp.controller('registerController', ['$scope', '$resource', function($scope, $resource) {
-
+fomaautdapp.controller('registerController', ['$scope', '$resource', function($scope, $resource) {	
+	$scope.userDetails = {
+		firstname: '',
+		lastname: '',
+		sex: '',
+		dob: '',
+		dateofjoining: '',
+		jobtype: '',
+		visastatus: '',
+		streetaddress: '',
+		apthousenumber: '',
+		city: '',
+		state: '',
+		zipcode: '',
+		mobile: '',	
+		email: '',		
+		degree: '',
+		major: '',
+		gpa: '',
+		graddate: '',	
+		position: '',
+		company: '',
+		years: '',						
+		disability: '',
+		veteran: '',
+		linkedin: '',
+		portfolio: ''	
+	}
+	$scope.register = function() {
+		var users = $resource('/api/register/adduser');
+		users.save($scope.userDetails, function(response) {
+			if(response.success) {
+				alert(response.message);
+			}
+			else {
+				alert(response.message);
+			}
+		});
+	}
 }]);

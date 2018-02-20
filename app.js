@@ -12,7 +12,7 @@ var session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var authentication = require('./routes/authentication');
-var home = require('./routes/home');
+var register = require('./routes/register');
 
 var app = express();
 
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/api/authentication', authentication);
-app.use('/api/home', home);
+app.use('/api/register', register);
 
 var Account = require('./models/user');
 passport.use(new LocalStrategy(Account.authenticate()));
