@@ -73,8 +73,16 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 		var users = $resource('/api/register/adduser');
 		users.save($scope.userDetails, function(response) {
 			if(response.success) {
-				alert(response.message);
-				$window.location.href = '/#/home';
+				var userRegister = $resource('/api/authentication/update');
+				userRegister.save({}, function(response1) {
+					if(response1.success) {
+						alert(response1.message);
+						$window.location.href = '/#/home';
+					}
+					else {
+						alert(response1.message);
+					}
+				});				
 			}
 			else {
 				alert(response.message);

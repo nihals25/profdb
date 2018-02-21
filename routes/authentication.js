@@ -58,8 +58,11 @@ router.post('/update', function(req, res) {
         },{
           $set: {isregistered: true}
         }, function(err, acc) {
-          if(err) throw err;
-          res.json(true);
+          if(err) {
+            res.json({success: false, message: 'An error occured. Please send a mail to {{mail_id}}'});
+            throw err;
+          }
+          res.json({success: true, message: 'Student details added successfully'});
         });          
     });
 });
