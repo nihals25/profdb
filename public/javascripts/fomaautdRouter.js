@@ -69,6 +69,27 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 		linkedin: '',
 		portfolio: ''	
 	}
+	loadStates = function() {		
+		var states = $resource('/api/register/states');
+		states.query(function(response){
+			$scope.states = response;
+		});
+	}
+	loadDegrees = function() {		
+		var states = $resource('/api/register/degrees');
+		states.query(function(response){
+			$scope.degrees = response;
+		});
+	}
+	loadMajors = function() {		
+		var states = $resource('/api/register/majors');
+		states.query(function(response){
+			$scope.majors = response;
+		});
+	}
+	loadStates();
+	loadDegrees();
+	loadMajors();
 	$scope.register = function() {
 		var users = $resource('/api/register/adduser');
 		users.save($scope.userDetails, function(response) {

@@ -43,4 +43,28 @@ router.post('/adduser', function(req, res) {
 	}	
 })
 
+router.get('/states', function(req, res) {
+	var collection = db.get('usstates');
+	collection.find({}, function(err, states) {
+		if(err) throw err;
+		res.send(states);
+	});
+});
+
+router.get('/degrees', function(req, res) {
+	var collection = db.get('degrees');
+	collection.find({}, function(err, degrees) {
+		if(err) throw err;
+		res.send(degrees);
+	});
+});
+
+router.get('/majors', function(req, res) {
+	var collection = db.get('majors');
+	collection.find({}, function(err, majors) {
+		if(err) throw err;
+		res.send(majors);
+	});
+});
+
 module.exports = router;

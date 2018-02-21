@@ -130,8 +130,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        <div class="row">
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="state">State</label>
-	                <div class="col-md-9">
-	                    <input type="text" ng-model="userDetails.state" class="form-control input-sm" required=""/>
+	                <div class="col-md-9">	                    
+	                    <select class="form-control input-sm" ng-model="userDetails.state" ng-options="state.state for state in states">
+				    		<option value="">-- Choose State --</option>
+					    </select>
 	                </div>
 	            </div>
 	        </div>	       
@@ -167,16 +169,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        <div class="row">
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="degree">Degree</label>
-	                <div class="col-md-9">
-	                    <input type="text" ng-model="userDetails.degree" class="form-control input-sm" required=""/>
+	                <div class="col-md-9">	                    
+	                    <select ng-options="degree.degree for degree in degrees" ng-model="userDetails.degree" class="form-control input-sm">
+	                    	<option value="">-- Choose Degree --</option>
+	                    </select>
 	                </div>
 	            </div>
 	        </div>	
 	        <div class="row">
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="majpr">Major</label>
-	                <div class="col-md-9">
-	                    <input type="text" ng-model="userDetails.major" class="form-control input-sm" required=""/>
+	                <div class="col-md-9">	                    
+	                    <select ng-options="major.major for major in majors" ng-model="userDetails.major" class="form-control input-sm">
+	                    	<option value="">-- Choose Major --</option>
+	                    </select>
 	                </div>
 	            </div>
 	        </div>		        	        	      
