@@ -90,19 +90,21 @@ router.post('/login', function(req, res, next) {
             return res.json({
                 message: "Internal Server Error!"
             })
-        } else if (!user) {                    
+        } else if (!user) {                           
             return res.json({
                 message: "No Such User!"
             })
         }
         req.logIn(user, function(err) {
             if (err) {
-                return res.json({
+                return res.send('alert("Login Failure!")');
+                return res.json({                    
                     message: "Login Failure!"
                 })
             }            
-            if(user.isregistered)
-              res.redirect('/#/home');
+            if(user.isregistered) {              
+              res.redirect('/#/userdetails/'+user._id);
+            }
             else 
               res.redirect('/#/register');
             global.user = user;                    

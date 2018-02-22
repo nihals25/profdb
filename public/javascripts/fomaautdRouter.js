@@ -16,6 +16,10 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/register.html',
 			controller: 'registerController'
 		})
+		.when('/userdetails/:id', {
+			templateUrl: 'partials/userdetails.html',
+			controller: 'userDetailsController'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -136,7 +140,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 				userRegister.save({}, function(response1) {
 					if(response1.success) {
 						alert(response1.message);
-						$window.location.href = '/#/home';
+						$window.location.href = '/#/userdetails/' + response.id;
 					}
 					else {
 						alert(response1.message);
@@ -148,4 +152,11 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 			}
 		});
 	}
+}]);
+
+fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeParams', function($scope, $resource, $routeParams) {	
+	var user = $resource('/api/userdetails/:id');
+	user.get({id: $routeParams.id}, function(resp) {
+		$scope.studentDetail = resp;
+	});
 }]);

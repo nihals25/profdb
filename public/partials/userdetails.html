@@ -1,0 +1,79 @@
+<div class="banner_1">
+	<div class="container">
+		<div id="search_wrapper1">
+		   <div id="search_form" class="clearfix">
+		    <!--<h1>Start your job search</h1>-->
+		    <!--<p>
+			 <input type="text" class="text" placeholder=" " value="Enter Keyword(s)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Keyword(s)';}">
+			 <input type="text" class="text" placeholder=" " value="Location" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Location';}">
+			 <label class="btn2 btn-2 btn2-1b"><input type="submit" value="Find Jobs"></label>
+			</p>-->			
+           </div>
+		</div>
+   </div> 
+</div>	
+<div class="container">
+    <div class="single">  
+		<div class="form-container">
+        	<h2>Student Data</h2>
+        	<div>
+        		<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">First Name: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.firstname}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Last Name: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.lastname}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Sex: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.sex}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Date of birth: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.dob | date:'MM/dd/yyyy'}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Date of Joining UTD: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.dateofjoining | date:'MM/dd/yyyy'}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Searching For: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.jobtype}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Visa Status: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.visastatus}}</label>
+		                </div>
+		            </div>
+	        	</div>
+        	</div>
+    	</div>
+    </div>
+</div>
