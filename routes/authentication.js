@@ -6,7 +6,7 @@ global.user={};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if(global.user != undefined && global.user._id != undefined && global.user._id != '') {
+  if(global.user != undefined && global.user._id != undefined && global.user._id !== '') {
     var resultArray = [
       {
         href: "/#/update",
