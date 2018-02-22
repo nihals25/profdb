@@ -38,7 +38,28 @@ fomaautdapp.controller('headerController', ['$scope', '$resource', function($sco
 }]);
 
 fomaautdapp.controller('signupController', ['$scope', '$resource', function($scope, $resource) {
-
+	$scope.validateUserName = function(){
+        $scope.userexistsmessage = false;
+        var reg = /^\w+$/;
+        if(!reg.test($('[name="username"]').val())) {            
+            $scope.usernamemessagetxt = 'Username can only contain letters, numbers and underscores';
+            $scope.userexistsmessage = true;              
+            signupForm.username.focus();
+        }
+        else {
+            var User = $resource('/api/authentication/userexists');
+            User.save({username:$('[name="username"]').val()}, function(response) {
+                if(response.result) {                    
+                    $scope.usernamemessagetxt = 'Username already exists';
+                    $scope.userexistsmessage = true;                    
+                    signupForm.username.focus();
+                }
+                else {
+                    $scope.userexistsmessage = false;
+                }                                    
+            });
+        }                        
+    };
 }]);
 
 fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
@@ -80,10 +101,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 		newmajor: '',
 		gpa: '',
 		graddate: '',
-		workexperience: $scope.workExperience,	
-		//position: '',
-		//company: '',
-		//years: '',						
+		workexperience: $scope.workExperience,								
 		disability: '',
 		veteran: '',
 		linkedin: '',
