@@ -41,7 +41,24 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', function($sco
 
 }]);
 
-fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {	
+fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
+	var wExpCounter = 0;	
+	$scope.workExperience = [];
+	$scope.addWorkExperience = function () {
+		wExpCounter+=1;
+		var wrkEx = {
+			number: wExpCounter,
+			position: '',
+			company: '',
+			from: '',
+			to: ''
+		}
+		$scope.workExperience.push(wrkEx);
+	};
+	$scope.removeWorkExperience = function () {
+		wExpCounter-=1;
+		$scope.workExperience.pop(); 
+	}
 	$scope.userDetails = {
 		firstname: '',
 		lastname: '',
@@ -62,10 +79,11 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 		major: '',
 		newmajor: '',
 		gpa: '',
-		graddate: '',	
-		position: '',
-		company: '',
-		years: '',						
+		graddate: '',
+		workexperience: $scope.workExperience,	
+		//position: '',
+		//company: '',
+		//years: '',						
 		disability: '',
 		veteran: '',
 		linkedin: '',

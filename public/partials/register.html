@@ -218,42 +218,58 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                </div>
 	            </div>
 	        </div> 
+	        <div ng-if="workExperience.length > 0">
+				<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-12 control-lable register-bolds">Work Experience</label>
+		            </div>
+		        </div>	     
+		        <div ng-repeat="workex in workExperience">
+		        	<div class="row">
+		            	<div class="form-group col-md-12">
+		                	<label class="col-md-3 control-lable" for="position">W.E {{workex.number}}</label>
+		            	</div>
+		        	</div>
+		        	<div class="row">
+		            	<div class="form-group col-md-12">
+		                	<label class="col-md-3 control-lable" for="position">Position</label>
+		                	<div class="col-md-9">
+		                    	<input type="text" ng-model="workex.position" class="form-control input-sm"/>
+		                	</div>
+		            	</div>
+		        	</div>	        
+		        	<div class="row">
+		            	<div class="form-group col-md-12">
+		                	<label class="col-md-3 control-lable" for="company">Company</label>
+		                	<div class="col-md-9">
+		                    	<input type="text" ng-model="workex.company" class="form-control input-sm"/>
+		                	</div>
+		            	</div>
+		        	</div>	        
+		        	<div class="row">
+		            	<div class="form-group col-md-3">
+		                	<label class="col-md-3 control-lable" for="from">From</label>
+		            	</div>
+		            	<div class="form-group col-md-3">	                	
+		                	<input type="date" ng-model="workex.from" class="form-control input-sm" required=""/>	                	
+		            	</div>
+		            	<div class="form-group col-md-3">
+		                	<label class="col-md-3 control-lable" for="position">To</label>
+		            	</div>
+		            	<div class="form-group col-md-3">	                	
+		                	<input type="date" ng-model="workex.to" class="form-control input-sm" required=""/>	                	
+		            	</div>
+		        	</div>	        	
+		        </div>
+	        </div>	               
 	        <div class="row">
-	            <div class="form-group col-md-12">
-	                <label class="col-md-12 control-lable register-bolds">Work Experience</label>
-	            </div>
-	        </div>	     
-	        <!--<div ng-repeat="workex in workExpCount">-->
-	        	<div class="row">
-	            	<div class="form-group col-md-12">
-	                	<label class="col-md-3 control-lable" for="position">Position</label>
-	                	<div class="col-md-9">
-	                    	<input type="text" ng-model="userDetails.position" class="form-control input-sm"/>
-	                	</div>
-	            	</div>
-	        	</div>	        
-	        	<div class="row">
-	            	<div class="form-group col-md-12">
-	                	<label class="col-md-3 control-lable" for="position">Company</label>
-	                	<div class="col-md-9">
-	                    	<input type="text" ng-model="userDetails.company" class="form-control input-sm"/>
-	                	</div>
-	            	</div>
-	        	</div>	        
-	        	<div class="row">
-	            	<div class="form-group col-md-12">
-	                	<label class="col-md-3 control-lable" for="position">Years</label>
-	                	<div class="col-md-9">
-	                    	<input type="text" ng-model="userDetails.years" class="form-control input-sm"/>
-	                	</div>
-	            	</div>
-	        	</div>	        	
-	        <!--</div>-->	        
-	        <!--<div class="row">
-            	<div class="form-group col-md-12">
-            		<a href="" style="float: right;" ng-click="addworkexperience()"> Add Work Experience</a>
+            	<div class="form-group col-md-6">
+            		<a href="" style="float: right;" ng-click="addWorkExperience()"> Add Work Experience</a>
             	</div>
-	        </div>--> 	
+            	<div class="form-group col-md-6" ng-show="workExperience.length > 0">
+            		<a href="" style="float: right;" ng-click="removeWorkExperience()"> Remove Work Experience</a>
+            	</div>
+	        </div> 		        
 	        <div class="row">
 	            <div class="form-group col-md-12">
 	                <label class="col-md-12 control-lable register-bolds">Others</label>

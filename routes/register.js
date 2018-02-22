@@ -5,7 +5,8 @@ var router = express.Router();
 
 router.post('/adduser', function(req, res) {
 	if(global.user != undefined && global.user._id != undefined && global.user._id != '') {
-		var collection = db.get('users');	
+		var collection = db.get('users');
+		console.log(req.body.workexperience);
 		collection.insert({
 			accountid: global.user._id,
 			firstname: req.body.firstname,
@@ -25,9 +26,10 @@ router.post('/adduser', function(req, res) {
 			major: req.body.major.major!='Other'?req.body.major.major:req.body.newmajor,
 			gpa: req.body.gpa,
 			graddate: req.body.graddate,
-			position: req.body.position,
-			company: req.body.company,
-			years: req.body.years,										
+			workexperience: req.body.workexperience,
+			//position: req.body.position,
+			//company: req.body.company,
+			//years: req.body.years,										
 			disability: req.body.disability,
 			veteran: req.body.veteran,
 			linkedin: req.body.linkedin,
