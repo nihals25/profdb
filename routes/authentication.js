@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   if(global.user != undefined && global.user._id != undefined && global.user._id !== '') {
     var resultArray = [
       {
-        href: "/#/update",
+        href: "/#/update/" + global.user._id,
         tag: 'Update Details' 
       }, 
       {

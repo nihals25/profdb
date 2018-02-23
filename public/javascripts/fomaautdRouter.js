@@ -20,6 +20,10 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/userdetails.html',
 			controller: 'userDetailsController'
 		})
+		.when('/update/:id', {
+			templateUrl: 'partials/register.html',
+			controller: 'updateController'	
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -67,7 +71,8 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', function($sco
 }]);
 
 fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
-	var wExpCounter = 0;	
+	var wExpCounter = 0;
+	$scope.updateForm = false;	
 	$scope.workExperience = [];
 	$scope.addWorkExperience = function () {
 		wExpCounter+=1;
@@ -164,4 +169,58 @@ fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeP
 	user.get({id: $routeParams.id}, function(resp) {
 		$scope.studentDetail = resp;
 	});
+}]);
+
+fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams', function($scope, $resource, $routeParams) {
+	$scope.updateForm = true;
+	$scope.workExperience = [];
+	$scope.addWorkExperience = function () {
+		wExpCounter+=1;
+		var wrkEx = {
+			number: wExpCounter,
+			position: '',
+			company: '',
+			from: '',
+			to: ''
+		}
+		$scope.workExperience.push(wrkEx);
+	};
+	$scope.removeWorkExperience = function () {
+		wExpCounter-=1;
+		$scope.workExperience.pop(); 
+	}	
+	loadStates = function() {		
+		var states = $resource('/api/register/states');
+		states.query(function(response){
+			$scope.states = response;
+		});
+	}
+	loadDegrees = function() {		
+		var states = $resource('/api/register/degrees');
+		states.query(function(response){
+			$scope.degrees = response;
+		});
+	}
+	loadMajors = function() {		
+		var states = $resource('/api/register/majors');
+		states.query(function(response){
+			$scope.majors = response;
+		});
+	}
+	loadStates();
+	loadDegrees();
+	loadMajors();
+	var user = $resource('/api/userdetails/:id');
+	user.get({id: $routeParams.id}, function(resp) {
+		$scope.userDetails = resp;
+		angular.forEach(resp.workexperience, function(value, key) {			
+			value.from = new Date(value.from);
+			value.to = new Date(value.to);
+		});
+		$scope.workExperience = resp.workexperience;
+		$scope.userDetails.dob = new Date($scope.userDetails.dob);
+		$scope.userDetails.dateofjoining = new Date($scope.userDetails.dateofjoining);
+		$scope.userDetails.graddate = new Date($scope.userDetails.graddate);
+		
+	});	
 }]);

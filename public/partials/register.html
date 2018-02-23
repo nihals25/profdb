@@ -4,24 +4,13 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
-<div class="banner_1">
-	<div class="container">
-		<div id="search_wrapper1">
-		   <div id="search_form" class="clearfix">
-		    <!--<h1>Start your job search</h1>-->
-		    <!--<p>
-			 <input type="text" class="text" placeholder=" " value="Enter Keyword(s)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Keyword(s)';}">
-			 <input type="text" class="text" placeholder=" " value="Location" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Location';}">
-			 <label class="btn2 btn-2 btn2-1b"><input type="submit" value="Find Jobs"></label>
-			</p>-->			
-           </div>
-		</div>
-   </div> 
+<div class="banner_1">	
 </div>	
 <div class="container">
     <div class="single">  
 	   <div class="form-container">
-        <h2>Register Form</h2>
+        <h2 ng-if="!updateForm">Register Form</h2>
+        <h2 ng-if="updateForm">Update Form</h2>
         <form name="registerForm" novalidate>
 	        <div class="row">
 	            <div class="form-group col-md-12">
@@ -282,10 +271,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                    <select ng-options="value for value in disabilityValues" ng-model="userDetails.disability" class="form-control input-sm">
 	                    	<option value="">-- Choose Status --</option>
 	                    </select>
-	                </div>
-	                <!--<div class="col-md-9">
-	                    <input type="text" ng-model="userDetails.disability" class="form-control input-sm" required=""/>
-	                </div>-->
+	                </div>	                
 	            </div>
 	        </div>	
 	        <div class="row">
@@ -295,10 +281,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                    <select ng-options="value for value in veteranValues" ng-model="userDetails.veteran" class="form-control input-sm">
 	                    	<option value="">-- Choose Status --</option>
 	                    </select>
-	                </div>
-	                <!--<div class="col-md-9">
-	                    <input type="text" ng-model="userDetails.veteran" class="form-control input-sm" required=""/>
-	                </div>-->
+	                </div>	                
 	            </div>
 	        </div>    
 	        <div class="row">
@@ -318,11 +301,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	            </div>
 	        </div>	       	        
 	        <div class="row">
-	            <div class="form-actions floatRight">
-	                <input type="submit" value="Register" ng-click="register()" class="btn btn-primary btn-sm">
-	            </div>
-	        </div>
-    	</form>
+	        	<div class="form-group col-md-12">
+	        		<div class="form-actions floatRight" ng-class="{'col-md-6': updateForm}">
+	                	<input type="submit" value="Register" ng-click="register()" class="btn btn-primary btn-sm">
+	            	</div>
+	            	<div class="form-actions floatRight col-md-6" ng-if="updateForm">
+		                <input type="submit" value="Back" ng-click="back()" class="btn btn-primary btn-sm">
+		            </div>
+	        	</div>	            
+	        </div>	        
+    	</form>    	
     </div>
  </div>
 </div>
