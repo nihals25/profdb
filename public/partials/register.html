@@ -278,17 +278,27 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        <div class="row">
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="disability">Disability</label>
-	                <div class="col-md-9">
-	                    <input type="text" ng-model="userDetails.disability" class="form-control input-sm" required=""/>
+	                <div class="col-md-9">	                    
+	                    <select ng-options="value for value in disabilityValues" ng-model="userDetails.disability" class="form-control input-sm">
+	                    	<option value="">-- Choose Status --</option>
+	                    </select>
 	                </div>
+	                <!--<div class="col-md-9">
+	                    <input type="text" ng-model="userDetails.disability" class="form-control input-sm" required=""/>
+	                </div>-->
 	            </div>
 	        </div>	
 	        <div class="row">
 	            <div class="form-group col-md-12">
 	                <label class="col-md-3 control-lable" for="veteran">Veteran Status</label>
-	                <div class="col-md-9">
-	                    <input type="text" ng-model="userDetails.veteran" class="form-control input-sm" required=""/>
+	                <div class="col-md-9">	                    
+	                    <select ng-options="value for value in veteranValues" ng-model="userDetails.veteran" class="form-control input-sm">
+	                    	<option value="">-- Choose Status --</option>
+	                    </select>
 	                </div>
+	                <!--<div class="col-md-9">
+	                    <input type="text" ng-model="userDetails.veteran" class="form-control input-sm" required=""/>
+	                </div>-->
 	            </div>
 	        </div>    
 	        <div class="row">

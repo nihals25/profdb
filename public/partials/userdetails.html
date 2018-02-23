@@ -69,7 +69,181 @@
 		            <div class="form-group col-md-12">
 		                <label class="col-md-3 control-lable">Visa Status: </label>
 		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.visastatus}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-12 control-lable register-bolds">Address</label>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Street Address: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.streetaddress}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Apt/House Number: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.apthousenumber}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">City: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.city}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">State: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.state}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Zipcode: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.zipcode}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Mobile Number: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.mobile}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Email: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.email}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-12 control-lable register-bolds">Education</label>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Degree: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.degree}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Major: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.major}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">GPA: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.gpa}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">(Expected) Graduation Date: </label>
+		                <div class="col-md-9">
+		                    <label class="control-lable">{{studentDetail.graddate}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div ng-if="studentDetail.workexperience.length > 0">
+	        		<div ng-repeat="workex in studentDetail.workexperience">
+						<div class="row">
+				            <div class="form-group col-md-12">
+				                <label class="col-md-12 control-lable register-bolds">Work Experience {{workex.number}}</label>
+				            </div>
+			        	</div>	
+			        	<div class="row">
+				            <div class="form-group col-md-12">
+				                <label class="col-md-3 control-lable">Position: </label>
+				                <div class="col-md-9">
+				                    <label class="control-lable">{{workex.position}}</label>
+				                </div>
+				            </div>
+	        			</div>
+	        			<div class="row">
+				            <div class="form-group col-md-12">
+				                <label class="col-md-3 control-lable">Company: </label>
+				                <div class="col-md-9">
+				                    <label class="control-lable">{{workex.company}}</label>
+				                </div>
+				            </div>
+	        			</div>
+	        			<div class="row">
+			            	<div class="form-group col-md-3">
+			                	<label class="col-md-3 control-lable">From</label>
+			            	</div>
+			            	<div class="form-group col-md-3">	
+			            		<label class="control-lable">{{workex.from}}</label>			                	
+			            	</div>
+			            	<div class="form-group col-md-3">
+			                	<label class="col-md-3 control-lable">To</label>
+			            	</div>
+			            	<div class="form-group col-md-3">	
+			            		<label class="control-lable">{{workex.to}}</label>               
+			            	</div>
+		        		</div>	  
+	        		</div>
+		    	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-12 control-lable register-bolds">Others</label>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Disability: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.disability}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Veteran Status: </label>
+		                <div class="col-md-9">
 		                    <label required="" class="control-lable">{{studentDetail.visastatus}}</label>
+		                </div>
+		            </div>
+	        	</div>	        	
+	        	<div class="row" ng-if="studentDetail.linkedin!=undefined && studentDetail.linkedin!=''">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">LinkedIn: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.linkedin}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row" ng-if="studentDetail.portfolio!=undefined && studentDetail.portfolio!=''">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Portfolio: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.portfolio}}</label>
 		                </div>
 		            </div>
 	        	</div>

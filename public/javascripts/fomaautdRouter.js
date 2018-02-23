@@ -132,6 +132,11 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 	loadStates();
 	loadDegrees();
 	loadMajors();
+	$scope.disabilityValues = ['Yes, I have a disability (or previously had a disability)', 
+		'No, I Don’t have a disability', 'I Don’t wish to answer'];
+	$scope.veteranValues = ['I am not a veteran', 'Disabled veteran', 'Recently separated veteran', 
+		'Active wartime or campaign badge veteran', 'Armed forces service medal veteran', 'I am NOT a protected veteran', 
+		'I choose not to identify my veteran status'];
 	$scope.register = function() {
 		var users = $resource('/api/register/adduser');
 		users.save($scope.userDetails, function(response) {
