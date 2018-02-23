@@ -167,7 +167,12 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeParams', function($scope, $resource, $routeParams) {	
 	var user = $resource('/api/userdetails/:id');
 	user.get({id: $routeParams.id}, function(resp) {
-		$scope.studentDetail = resp;
+		if(resp.success) {
+			$scope.studentDetail = resp.user;
+		}
+		else {
+			alert(resp.message);
+		}		
 	});
 }]);
 

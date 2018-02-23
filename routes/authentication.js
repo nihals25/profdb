@@ -3,6 +3,7 @@ var passport = require('passport');
 var Account = require('../models/user');
 var router = express.Router();
 global.user={};
+global.loggedin=false;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -101,18 +102,20 @@ router.post('/login', function(req, res, next) {
                 return res.json({                    
                     message: "Login Failure!"
                 })
-            }            
+            }      
+            global.loggedin = true;
+            global.user = user;          
             if(user.isregistered) {              
               res.redirect('/#/userdetails/'+user._id);
             }
             else 
-              res.redirect('/#/register');
-            global.user = user;                    
+              res.redirect('/#/register');                          
         });
     })(req, res, next);
 });
 
 router.get('/logout', function(req, res) {
+      global.loggedin = false;
       global.user={};
       req.logout();
       res.redirect('/#/login');

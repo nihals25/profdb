@@ -155,7 +155,7 @@
 		            <div class="form-group col-md-12">
 		                <label class="col-md-3 control-lable">(Expected) Graduation Date: </label>
 		                <div class="col-md-9">
-		                    <label class="control-lable">{{studentDetail.graddate}}</label>
+		                    <label class="control-lable">{{studentDetail.graddate | date:'MM/dd/yyyy'}}</label>
 		                </div>
 		            </div>
 	        	</div>
@@ -187,13 +187,13 @@
 			                	<label class="col-md-3 control-lable">From</label>
 			            	</div>
 			            	<div class="form-group col-md-3">	
-			            		<label class="control-lable">{{workex.from}}</label>			                	
+			            		<label class="control-lable">{{workex.from | date:'MM/dd/yyyy'}}</label>			                	
 			            	</div>
 			            	<div class="form-group col-md-3">
 			                	<label class="col-md-3 control-lable">To</label>
 			            	</div>
 			            	<div class="form-group col-md-3">	
-			            		<label class="control-lable">{{workex.to}}</label>               
+			            		<label class="control-lable">{{workex.to | date:'MM/dd/yyyy'}}</label>               
 			            	</div>
 		        		</div>	  
 	        		</div>
