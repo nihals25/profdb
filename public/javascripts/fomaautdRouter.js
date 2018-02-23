@@ -176,7 +176,7 @@ fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeP
 	});
 }]);
 
-fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams', function($scope, $resource, $routeParams) {
+fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams', '$window', function($scope, $resource, $routeParams, $window) {
 	$scope.updateForm = true;
 	$scope.workExperience = [];
 	$scope.addWorkExperience = function () {
@@ -217,15 +217,22 @@ fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams
 	loadMajors();
 	var user = $resource('/api/userdetails/:id');
 	user.get({id: $routeParams.id}, function(resp) {
-		$scope.userDetails = resp;
-		angular.forEach(resp.workexperience, function(value, key) {			
-			value.from = new Date(value.from);
-			value.to = new Date(value.to);
-		});
-		$scope.workExperience = resp.workexperience;
-		$scope.userDetails.dob = new Date($scope.userDetails.dob);
-		$scope.userDetails.dateofjoining = new Date($scope.userDetails.dateofjoining);
-		$scope.userDetails.graddate = new Date($scope.userDetails.graddate);
-		
-	});	
+		if(resp.success) {
+			$scope.userDetails = resp.user;
+			angular.forEach(resp.user.workexperience, function(value, key) {			
+				value.from = new Date(value.from);
+				value.to = new Date(value.to);
+			});
+			$scope.workExperience = resp.user.workexperience;
+			$scope.userDetails.dob = new Date($scope.userDetails.dob);
+			$scope.userDetails.dateofjoining = new Date($scope.userDetails.dateofjoining);
+			$scope.userDetails.graddate = new Date($scope.userDetails.graddate);
+		}
+		else {
+			alert(resp.message);
+		}			
+	});
+	$scope.back = function() {
+		$window.location.href = '/#/userdetails/' + $routeParams.id;
+	}	
 }]);
