@@ -6,15 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var passport = require('passport');
-//var LocalStrategy = require('passport-local').Strategy;
-//var mongoose = require('mongoose');
-//var session = require('express-session');
+
+require('./models/db');
+require('./config/passport');
+var routesApi = require('./routes/routes');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var authentication = require('./routes/authentication');
-var register = require('./routes/register');
-var userdetails = require('./routes/userdetails');
+//var users = require('./routes/users');
+//var authentication = require('./routes/authentication');
+//var register = require('./routes/register');
+//var userdetails = require('./routes/userdetails');
 
 var app = express();
 
@@ -28,23 +29,22 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret:'a-secret-token'}));
 app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
-app.use('/api/authentication', authentication);
-app.use('/api/register', register);
-app.use('/api/userdetails', userdetails);
+app.use('/api/authentication', routesApi);
+//app.use('/users', users);
+//app.use('/api/authentication', authentication);
+//app.use('/api/register', register);
+//app.use('/api/userdetails', userdetails);
 
-var Account = require('./models/user');
-passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
+//var Account = require('./models/user');
+//passport.use(new LocalStrategy(Account.authenticate()));
+//passport.serializeUser(Account.serializeUser());
+//passport.deserializeUser(Account.deserializeUser());
 
-mongoose.connect('mongodb://localhost:27017/passport_local_mongoose_express4');
+//mongoose.connect('mongodb://localhost:27017/passport_local_mongoose_express4');
 //mongodb://fomaautd:fomaa@utd2018@mongodb/fomaautd
 
 // catch 404 and forward to error handler

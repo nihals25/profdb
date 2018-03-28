@@ -30,6 +30,7 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
+	debugger;
 	$scope.loggedin = false;            	
     var User = $resource('/api/authentication');    
     User.get({}, function(response) {            
@@ -42,7 +43,7 @@ fomaautdapp.controller('headerController', ['$scope', '$resource', function($sco
     });
     $scope.toggleItem = function(event) {    	
     	$(event.target.parentElement).toggleClass('open');    	   
-    };        
+    };       
 }]);
 
 fomaautdapp.controller('signupController', ['$scope', '$resource', function($scope, $resource) {
