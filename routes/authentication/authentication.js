@@ -1,6 +1,6 @@
 var express = require('express');
 var passport = require('passport');
-var Account = require('../models/user');
+var Account = require('../../models/user');
 var router = express.Router();
 global.user={};
 global.loggedin=false;
@@ -69,15 +69,13 @@ router.post('/update', function(req, res) {
 });
 
 router.post('/signup', function(req, res) {  
+    console.log(req.body);
     Account.register(new Account({ username : req.body.username, email : req.body.email, isregistered: false, isadmin: false }), req.body.password, function(err, account) {        
         if (err) {
             return res.render('register', { account : account });
         }
 
-        passport.authenticate('local')(req, res, function () {   
-          res.json({
-            "token": Account.generateJwt()
-          });       
+        passport.authenticate('local')(req, res, function () {          
           res.redirect('/#/register');
         });
     });
@@ -108,10 +106,7 @@ router.post('/login', function(req, res, next) {
             }      
             global.loggedin = true;
             global.user = user;          
-            if(user.isregistered) {
-              res.json({
-                "token": Account.generateJwt()
-              });                     
+            if(user.isregistered) {              
               res.redirect('/#/userdetails/'+user._id);
             }
             else 
