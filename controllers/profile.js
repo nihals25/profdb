@@ -36,7 +36,8 @@ module.exports.loadHeader = function(req, res) {
 	    }
 	    resultArray.push(
 	    {
-	      href: "/api/authentication/logout",
+	      //href: "/api/authentication/logout",
+	      href: '/#/logout',
 	      tag: 'Logout'
 	    });
 	    res.json({result: resultArray, username: global.user.username});

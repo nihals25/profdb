@@ -72,5 +72,5 @@ module.exports.logout = function(req, res) {
   global.loggedin = false;
   global.user={};
   req.logout();
-  res.redirect('/#/login');
+  res.json({success: true});  
 };

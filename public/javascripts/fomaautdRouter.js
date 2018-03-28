@@ -12,6 +12,10 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 		.when('/signup', {
 			templateUrl: 'partials/signup.html',
 			controller: 'signupController'
+		}).
+		when('/logout', {
+			templateUrl: 'partials/login.html',
+			controller: 'logoutController'
 		})
 		.when('/register', {
 			templateUrl: 'partials/register.html',
@@ -30,6 +34,33 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 		});
 }]);
 
+fomaautdapp.factory('commonService', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue || false;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key, defaultValue) {
+      if($window.localStorage[key] != undefined){
+          return JSON.parse($window.localStorage[key]);
+      }else{
+        return defaultValue || false;
+      }
+    },
+    remove: function(key){
+      $window.localStorage.removeItem(key);
+    },
+    clear: function(){
+      $window.localStorage.clear();
+    }
+  }
+}]);
+
 fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
 	$scope.loggedin = false;            	
     var User = $resource('/api/authentication/');    
@@ -46,7 +77,7 @@ fomaautdapp.controller('headerController', ['$scope', '$resource', function($sco
     };       
 }]);
 
-fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
+fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', 'commonService',function($scope, $resource, $window, commonService) {
 	$scope.credential = {
 		username: '',
 		password: ''
@@ -55,8 +86,9 @@ fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', fun
 		var Login = $resource('/api/authentication/login');
     	Login.save($scope.credential, function(response) {    		
     		if(response.success) {
-    			$window.location.href = response.redirecturl;
+    			commonService.set('mean-token', response.token);
     			$window.location.reload();
+    			$window.location.href = response.redirecturl;    			
     		}
     		else {
     			alert(response.message);
@@ -65,7 +97,7 @@ fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', fun
 	};
 }]);
 
-fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
+fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', 'commonService', function($scope, $resource, $window, commonService) {
 	$scope.credential = {
 		username: '',
 		email: '',
@@ -97,6 +129,8 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', fu
     	var Signup = $resource('/api/authentication/signup');
     	Signup.save($scope.credential, function(response) {
     		if(response.success) {
+    			commonService.set('mean-token', response.token);
+    			$window.location.reload();
     			$window.location.href = '/#/register';
     		}
     		else {
@@ -104,6 +138,17 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', fu
     		};
     	});
     };
+}]);
+
+fomaautdapp.controller('logoutController', ['$scope', '$resource', '$window', 'commonService', function($scope, $resource, $window, commonService) {
+	var Logout = $resource('/api/authentication/logout');
+	Logout.get({}, function(response) {
+		if(response.success) {
+			commonService.remove('mean-token');
+		}
+		$window.location.href="/#/login";
+		$window.location.reload();
+	});
 }]);
 
 fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
