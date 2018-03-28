@@ -21,7 +21,7 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/register.html',
 			controller: 'registerController'
 		})
-		.when('/userdetails/:id', {
+		.when('/userdetails', {
 			templateUrl: 'partials/userdetails.html',
 			controller: 'userDetailsController'
 		})
@@ -35,30 +35,46 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 fomaautdapp.factory('commonService', ['$window', function($window) {
-  return {
-    set: function(key, value) {
-      $window.localStorage[key] = value;
-    },
-    get: function(key, defaultValue) {
-      return $window.localStorage[key] || defaultValue || false;
-    },
-    setObject: function(key, value) {
-      $window.localStorage[key] = JSON.stringify(value);
-    },
-    getObject: function(key, defaultValue) {
-      if($window.localStorage[key] != undefined){
-          return JSON.parse($window.localStorage[key]);
-      }else{
-        return defaultValue || false;
-      }
-    },
-    remove: function(key){
-      $window.localStorage.removeItem(key);
-    },
-    clear: function(){
-      $window.localStorage.clear();
-    }
-  }
+	var _getUserDetails = function() {
+	  	var token = $window.localStorage['mean-token'];
+	  	var payload;
+	  	if (token) {
+	    	payload = token.split('.')[1];
+	    	payload = window.atob(payload);
+	    	return JSON.parse(payload);
+	  	} 
+	  	else {
+	    	return null;
+	  	}
+	}
+  	return {
+	    set: function(key, value) {
+	      $window.localStorage[key] = value;
+	    },
+	    get: function(key, defaultValue) {
+	      return $window.localStorage[key] || defaultValue || false;
+	    },
+	    setObject: function(key, value) {
+	      $window.localStorage[key] = JSON.stringify(value);
+	    },
+	    getUserDetails: _getUserDetails,
+		isLoggedIn: function() {
+		  	var user = _getUserDetails();
+		  	console.log(user);		  	
+		  	if (user) {
+		    	return user.exp > Date.now() / 1000;
+		  	} 
+		  	else {
+		    	return false;
+		  	}
+		},
+	    remove: function(key){
+	      $window.localStorage.removeItem(key);
+	    },
+	    clear: function(){
+	      $window.localStorage.clear();
+	    }
+  	}
 }]);
 
 fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
@@ -147,7 +163,7 @@ fomaautdapp.controller('logoutController', ['$scope', '$resource', '$window', 'c
 	var Logout = $resource('/api/authentication/logout');
 	Logout.get({}, function(response) {
 		if(response.success) {
-			commonService.remove('mean-token');
+			commonService.remove('mean-token');			
 		}		
 		$window.location.reload();
 		$window.location.href="/#/login";
@@ -245,7 +261,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 				userRegister.save({}, function(response1) {
 					if(response1.success) {
 						alert(response1.message);
-						$window.location.href = '/#/userdetails/' + response.id;
+						$window.location.href = '/#/userdetails';
 					}
 					else {
 						alert(response1.message);
@@ -259,16 +275,20 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 	}
 }]);
 
-fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeParams', function($scope, $resource, $routeParams) {	
-	var user = $resource('/api/userdetails/:id');
-	user.get({id: $routeParams.id}, function(resp) {
-		if(resp.success) {
-			$scope.studentDetail = resp.user;
-		}
-		else {
-			alert(resp.message);
-		}		
-	});
+fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeParams', 'commonService', 
+	function($scope, $resource, $routeParams, commonService) {
+	if(commonService.isLoggedIn()) {
+		var token = commonService.getUserDetails();
+		var user = $resource('/api/userdetails/:id');
+		user.get({id: token._id}, function(resp) {
+			if(resp.success) {
+				$scope.studentDetail = resp.user;
+			}				
+		});
+	}
+	else {
+		alert('Please login to view the details');
+	}		
 }]);
 
 fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams', '$window', function($scope, $resource, 
@@ -329,6 +349,6 @@ fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams
 		}			
 	});
 	$scope.back = function() {
-		$window.location.href = '/#/userdetails/' + $routeParams.id;
+		$window.location.href = '/#/userdetails';
 	}	
 }]);

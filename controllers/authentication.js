@@ -54,7 +54,7 @@ module.exports.login = function(req, res) {
       res.json({
         success: true,
         token: token,
-        redirecturl: user.isregistered ? '/#/userdetails/'+ user._id : '/#/register/'
+        redirecturl: user.isregistered ? '/#/userdetails' : '/#/register/'
       });
       res.status(200);
     } else {                 
