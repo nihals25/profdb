@@ -74,3 +74,20 @@ module.exports.logout = function(req, res) {
   req.logout();
   res.json({success: true});  
 };
+
+module.exports.update = function(req, res) {
+   User.findOne({username : global.user.username}, function(err, account) {
+        if(err) throw err;
+        User.update({
+          username: global.user.username
+        },{
+          $set: {isregistered: true}
+        }, function(err, acc) {
+          if(err) {
+            res.json({success: false, message: 'An error occured. Please send a mail to {{mail_id}}'});
+            throw err;
+          }
+          res.json({success: true, message: 'Student details added successfully'});
+        });          
+    });
+};

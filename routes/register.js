@@ -6,15 +6,15 @@ var router = express.Router();
 router.post('/adduser', function(req, res) {
 	if(global.user != undefined && global.user._id != undefined && global.user._id != '') {
 		var collection = db.get('users');
-		console.log(req.body.workexperience);
 		collection.insert({
 			accountid: global.user._id,
 			firstname: req.body.firstname,
 			lastname: req.body.lastname,
 			sex: req.body.sex,
 			dob: req.body.dob,
-			dateofjoining: req.body.dateofjoining,	
+			intake: req.body.intake.intake!='Other'?req.body.intake.intake:req.body.newintake,
 			jobtype: req.body.jobtype,
+			domain: req.body.domain,
 			visastatus: req.body.visastatus,							
 			streetaddress: req.body.streetaddress,
 			apthousenumber: req.body.apthousenumber,
@@ -26,9 +26,10 @@ router.post('/adduser', function(req, res) {
 			major: req.body.major.major!='Other'?req.body.major.major:req.body.newmajor,
 			gpa: req.body.gpa,
 			graddate: req.body.graddate,
-			workexperience: req.body.workexperience,										
-			disability: req.body.disability,
-			veteran: req.body.veteran,
+			workexperience: req.body.workexperience,
+			race: req.body.race,			
+			veteran: req.body.veteran,							
+			disability: req.body.disability,			
 			linkedin: req.body.linkedin,
 			portfolio: req.body.portfolio,
 			isauthenticated: false		

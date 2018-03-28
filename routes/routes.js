@@ -18,5 +18,6 @@ router.post('/userexists', ctrlAuth.userexists);
 router.post('/signup', ctrlAuth.signup);
 router.post('/login', ctrlAuth.login);
 router.get('/logout', ctrlAuth.logout);
+router.post('/update', ctrlAuth.update);
 
 module.exports = router;
