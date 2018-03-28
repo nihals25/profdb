@@ -77,7 +77,8 @@ fomaautdapp.controller('headerController', ['$scope', '$resource', function($sco
     };       
 }]);
 
-fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', 'commonService',function($scope, $resource, $window, commonService) {
+fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', 'commonService',function($scope, $resource, 
+	$window, commonService) {
 	$scope.credential = {
 		username: '',
 		password: ''
@@ -97,7 +98,8 @@ fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', 'co
 	};
 }]);
 
-fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', 'commonService', function($scope, $resource, $window, commonService) {
+fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', 'commonService', function($scope, $resource, 
+	$window, commonService) {
 	$scope.credential = {
 		username: '',
 		email: '',
@@ -140,14 +142,15 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', 'c
     };
 }]);
 
-fomaautdapp.controller('logoutController', ['$scope', '$resource', '$window', 'commonService', function($scope, $resource, $window, commonService) {
+fomaautdapp.controller('logoutController', ['$scope', '$resource', '$window', 'commonService', function($scope, $resource, 
+	$window, commonService) {
 	var Logout = $resource('/api/authentication/logout');
 	Logout.get({}, function(response) {
 		if(response.success) {
 			commonService.remove('mean-token');
-		}
-		$window.location.href="/#/login";
+		}		
 		$window.location.reload();
+		$window.location.href="/#/login";
 	});
 }]);
 
@@ -197,6 +200,12 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 		linkedin: '',
 		portfolio: ''	
 	}
+	loadIntakes = function() {
+		var intakes = $resource('/api/register/intakes');
+		intakes.query(function(response){
+			$scope.intakes = response;
+		});
+	}
 	loadStates = function() {		
 		var states = $resource('/api/register/states');
 		states.query(function(response){
@@ -204,17 +213,18 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 		});
 	}
 	loadDegrees = function() {		
-		var states = $resource('/api/register/degrees');
-		states.query(function(response){
+		var degrees = $resource('/api/register/degrees');
+		degrees.query(function(response){
 			$scope.degrees = response;
 		});
 	}
 	loadMajors = function() {		
-		var states = $resource('/api/register/majors');
-		states.query(function(response){
+		var majors = $resource('/api/register/majors');
+		majors.query(function(response){
 			$scope.majors = response;
 		});
-	}
+	}	
+	loadIntakes();
 	loadStates();
 	loadDegrees();
 	loadMajors();
@@ -223,6 +233,8 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 	$scope.veteranValues = ['I am not a veteran', 'Disabled veteran', 'Recently separated veteran', 
 		'Active wartime or campaign badge veteran', 'Armed forces service medal veteran', 'I am NOT a protected veteran', 
 		'I choose not to identify my veteran status'];
+	$scope.raceValues = ['Hispanic or Latino', 'American Indian or Alaska Native', 'Asian', 'Black or African American', 
+	'Native Hawaiian or Other Pacific Islander', 'White'];		
 	$scope.register = function() {
 		var users = $resource('/api/register/adduser');
 		users.save($scope.userDetails, function(response) {
@@ -257,7 +269,8 @@ fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeP
 	});
 }]);
 
-fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams', '$window', function($scope, $resource, $routeParams, $window) {
+fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams', '$window', function($scope, $resource, 
+	$routeParams, $window) {
 	$scope.updateForm = true;
 	$scope.workExperience = [];
 	$scope.addWorkExperience = function () {

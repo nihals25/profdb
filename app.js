@@ -12,10 +12,8 @@ require('./config/passport');
 var routesApi = require('./routes/routes');
 
 var index = require('./routes/index');
-//var users = require('./routes/users');
-//var authentication = require('./routes/authentication');
-//var register = require('./routes/register');
-//var userdetails = require('./routes/userdetails');
+var register = require('./routes/register');
+var userdetails = require('./routes/userdetails');
 
 var app = express();
 
@@ -34,10 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api/authentication', routesApi);
-//app.use('/users', users);
-//app.use('/api/authentication', authentication);
-//app.use('/api/register', register);
-//app.use('/api/userdetails', userdetails);
+app.use('/api/register', register);
+app.use('/api/userdetails', userdetails);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -66,4 +66,12 @@ router.get('/majors', function(req, res) {
 	});
 });
 
+router.get('/intakes', function(req, res) {
+	var collection = db.get('intakes');
+	collection.find({}, function(err, intakes) {
+		if(err) throw err;
+		res.send(intakes);
+	});
+});
+
 module.exports = router;
