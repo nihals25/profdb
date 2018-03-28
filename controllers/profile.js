@@ -15,7 +15,7 @@ module.exports.profileRead = function(req, res) {
 
 };
 
-module.exports.loadHeader = function(req, res) {
+module.exports.loadHeader = function(req, res) {	
 	if(global.user != undefined && global.user._id != undefined && global.user._id !== '') {
 	    var resultArray = [
 	      {

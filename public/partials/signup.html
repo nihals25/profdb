@@ -11,14 +11,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="col-md-8 single_right">
 			<div class="login-form-section">
 				<div class="login-content">
-					<form action="/api/authentication/signup" method="post" name="signupForm">
+					<form ng-submit="submitform()" name="signupForm">
 						<div class="section-title">
 							<h3>Sign Up</h3>
 						</div>
 						<div class="textbox-wrap">
 							<div class="input-group">
 								<span class="input-group-addon "><i class="fa fa-user"></i></span>
-								<input type="text" required="required" class="form-control" placeholder="Username" name="username" ng-blur="validateUserName()" ng-keyup="validateUserName()">
+								<input type="text" required="required" class="form-control" placeholder="Username" name="username" ng-blur="validateUserName()" ng-keyup="validateUserName()" ng-model="credential.username">
 							</div>
 						</div>
 						<div class="textbox-wrap" ng-show="userexistsmessage" >
@@ -29,13 +29,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="textbox-wrap">
 							<div class="input-group">
 								<span class="input-group-addon "><i class="fa fa-user"></i></span>
-								<input type="email" required="required" class="form-control" placeholder="Email" name="email">
+								<input type="email" required="required" class="form-control" placeholder="Email" name="email" ng-model="credential.email">
 							</div>
 						</div>
 						<div class="textbox-wrap">
 							<div class="input-group">
 								<span class="input-group-addon "><i class="fa fa-key"></i></span>
-								<input type="password" required="required" class="form-control " placeholder="Password" name="password">
+								<input type="password" required="required" class="form-control " placeholder="Password" name="password" ng-model="credential.password">
 							</div>
 						</div>
 						<div class="login-btn">

@@ -7,12 +7,16 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var Account = new Schema({
 	username: String,
 	email: String,
-	password: String,
 	isregistered: Boolean,
 	isadmin: Boolean,
 	hash: String,
   	salt: String	
 });
+
+Account.methods.setPassword = function(password) {
+  this.salt = crypto.randomBytes(16).toString('hex');
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+};
 
 Account.methods.validPassword = function(password) {
   var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
@@ -29,7 +33,5 @@ Account.methods.generateJwt = function () {
 		exp: parseInt(expiry.getTime() / 1000),
 	}, "DB_SECRET");	
 };
-
-Account.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('Account', Account);

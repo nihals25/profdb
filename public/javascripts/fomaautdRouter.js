@@ -6,7 +6,8 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/home.html'
 		})
 		.when('/login', {
-			templateUrl: 'partials/login.html'		
+			templateUrl: 'partials/login.html',
+			controller: 'loginController'		
 		})
 		.when('/signup', {
 			templateUrl: 'partials/signup.html',
@@ -30,9 +31,8 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
-	debugger;
 	$scope.loggedin = false;            	
-    var User = $resource('/api/authentication');    
+    var User = $resource('/api/authentication/');    
     User.get({}, function(response) {            
         if(response != null && response.result != undefined && response.result != null && 
         	response.username != undefined && response.username != null && response.username != '') {
@@ -46,7 +46,31 @@ fomaautdapp.controller('headerController', ['$scope', '$resource', function($sco
     };       
 }]);
 
-fomaautdapp.controller('signupController', ['$scope', '$resource', function($scope, $resource) {
+fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
+	$scope.credential = {
+		username: '',
+		password: ''
+	};
+	$scope.submitform = function () {		
+		var Login = $resource('/api/authentication/login');
+    	Login.save($scope.credential, function(response) {    		
+    		if(response.success) {
+    			$window.location.href = response.redirecturl;
+    			$window.location.reload();
+    		}
+    		else {
+    			alert(response.message);
+    		};
+    	});
+	};
+}]);
+
+fomaautdapp.controller('signupController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
+	$scope.credential = {
+		username: '',
+		email: '',
+		password: ''
+	};
 	$scope.validateUserName = function(){
         $scope.userexistsmessage = false;
         var reg = /^\w+$/;
@@ -68,6 +92,17 @@ fomaautdapp.controller('signupController', ['$scope', '$resource', function($sco
                 }                                    
             });
         }                        
+    };
+    $scope.submitform = function() {
+    	var Signup = $resource('/api/authentication/signup');
+    	Signup.save($scope.credential, function(response) {
+    		if(response.success) {
+    			$window.location.href = '/#/register';
+    		}
+    		else {
+
+    		};
+    	});
     };
 }]);
 

@@ -4,67 +4,73 @@ var User = mongoose.model('Account');
 global.user = {};
 global.loggedIn = false;
 
-var sendJSONresponse = function(res, status, content) {
-  res.status(status);
-  res.json(content);
+module.exports.userexists = function(req, res) {  
+  User.findOne({username : req.body.username}, function(err, account) {
+    if(err) {
+      res.json({result: false});
+      throw err;
+    }
+    if(account)
+      res.json({result: true});
+    else
+      res.json({result: false});
+  }); 
+  delete user;
 };
 
-module.exports.register = function(req, res) {
-
-  // if(!req.body.name || !req.body.email || !req.body.password) {
-  //   sendJSONresponse(res, 400, {
-  //     "message": "All fields required"
-  //   });
-  //   return;
-  // }
-
+module.exports.signup = function(req, res) {
   var user = new User();
-
-  user.name = req.body.name;
+  user.username = req.body.username;
   user.email = req.body.email;
-
+  user.isregistered = false;
+  user.isadmin = false,
   user.setPassword(req.body.password);
-
-  user.save(function(err) {
+  user.save(function(err) {    
     var token;
     token = user.generateJwt();
-    res.status(200);
+    global.user = user;
+    global.loggedIn = true;    
     res.json({
-      "token" : token
-    });
+      success: true,
+      token : token
+    });    
+    res.status(200);
   });
-
+  delete user;
 };
 
 module.exports.login = function(req, res) {
-
-  // if(!req.body.email || !req.body.password) {
-  //   sendJSONresponse(res, 400, {
-  //     "message": "All fields required"
-  //   });
-  //   return;
-  // }
-
-  passport.authenticate('local', function(err, user, info){
+  passport.authenticate('local', function(err, user, info){    
     var token;
-
-    // If Passport throws/catches an error
     if (err) {
-      res.status(404).json(err);
+      res.status(404);
+      res.json({message: err});
       return;
     }
-
-    // If a user is found
     if(user){
       token = user.generateJwt();
-      res.status(200);
+      global.user = user;
+      global.loggedIn = true;           
       res.json({
-        "token" : token
+        success: true,
+        token: token,
+        redirecturl: user.isregistered ? '/#/userdetails/'+ user._id : '/#/register/'
       });
-    } else {
-      // If user is not found
-      res.status(401).json(info);
+      res.status(200);
+    } else {                 
+      res.json({
+        success: false,
+        message: info.message
+      });
+      console.log(res.json);
+      res.status(401);
     }
   })(req, res);
+};
 
+module.exports.logout = function(req, res) {  
+  global.loggedin = false;
+  global.user={};
+  req.logout();
+  res.redirect('/#/login');
 };
