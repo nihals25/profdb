@@ -16,30 +16,26 @@ module.exports.profileRead = function(req, res) {
 };
 
 module.exports.loadHeader = function(req, res) {	
-	if(global.user != undefined && global.user._id != undefined && global.user._id !== '') {
-	    var resultArray = [
-	      {
-	        href: "/#/update/" + global.user._id,
-	        tag: 'Update Details' 
-	      }, 
-	      {
-	        href: "/#/resume",
-	        tag: 'Add/Update Resume' 
-	      },
-	    ];    
-	    if(global.user.isadmin) {
-	      resultArray.push(
-	        {
-	          href: "/#/authenticate",
-	          tag: 'Authenticate User'
-	        });
-	    }
-	    resultArray.push(
-	    {
-	      //href: "/api/authentication/logout",
-	      href: '/#/logout',
-	      tag: 'Logout'
-	    });
-	    res.json({result: resultArray, username: global.user.username});
-  	};  
+	var resultArray = [
+    	{
+        	href: "/#/update/",
+        	tag: 'Update Details' 
+      	}, 
+      	{
+        	href: "/#/resume",
+        	tag: 'Add/Update Resume' 
+      	},
+    ];    
+    /*if(global.user.isadmin) {
+      	resultArray.push({
+          	href: "/#/authenticate",
+          	tag: 'Authenticate User'
+        });
+    }*/
+    resultArray.push({
+        //href: "/api/authentication/logout",
+      	href: '/#/logout',
+      	tag: 'Logout'
+    });
+    res.json({result: resultArray}); 
 };

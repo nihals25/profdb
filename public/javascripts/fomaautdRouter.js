@@ -25,7 +25,7 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/userdetails.html',
 			controller: 'userDetailsController'
 		})
-		.when('/update/:id', {
+		.when('/update/', {
 			templateUrl: 'partials/register.html',
 			controller: 'updateController'	
 		})
@@ -77,13 +77,14 @@ fomaautdapp.factory('commonService', ['$window', function($window) {
   	}
 }]);
 
-fomaautdapp.controller('headerController', ['$scope', '$resource', function($scope, $resource) {
+fomaautdapp.controller('headerController', ['$scope', '$resource', 'commonService', function($scope, $resource, commonService) {
 	$scope.loggedin = false;            	
-    var User = $resource('/api/authentication/');    
-    User.get({}, function(response) {            
-        if(response != null && response.result != undefined && response.result != null && 
-        	response.username != undefined && response.username != null && response.username != '') {
-            $scope.username = response.username;
+	if(commonService.isLoggedIn()) {
+		var token = commonService.getUserDetails();
+		var User = $resource('/api/authentication/');    
+    	User.get({}, function(response) {            
+        if(response != null && response.result != undefined && response.result != null) {
+            $scope.username = token.username;
             $scope.loggedin = true;   
             $scope.liArray =  response.result;                                                   
         }
@@ -91,6 +92,10 @@ fomaautdapp.controller('headerController', ['$scope', '$resource', function($sco
     $scope.toggleItem = function(event) {    	
     	$(event.target.parentElement).toggleClass('open');    	   
     };       
+	}
+	else {
+		$scope.loggedin = false;
+	}    
 }]);
 
 fomaautdapp.controller('loginController', ['$scope', '$resource', '$window', 'commonService',function($scope, $resource, 
@@ -170,113 +175,120 @@ fomaautdapp.controller('logoutController', ['$scope', '$resource', '$window', 'c
 	});
 }]);
 
-fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', function($scope, $resource, $window) {
-	var wExpCounter = 0;
-	$scope.updateForm = false;	
-	$scope.workExperience = [];
-	$scope.addWorkExperience = function () {
-		wExpCounter+=1;
-		var wrkEx = {
-			number: wExpCounter,
-			position: '',
-			company: '',
-			from: '',
-			to: ''
+fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 'commonService', 
+	function($scope, $resource, $window, commonService) {
+	if(commonService.isLoggedIn()) {
+		var wExpCounter = 0;
+		$scope.updateForm = false;	
+		$scope.workExperience = [];
+		$scope.addWorkExperience = function () {
+			wExpCounter+=1;
+			var wrkEx = {
+				number: wExpCounter,
+				position: '',
+				company: '',
+				from: '',
+				to: ''
+			}
+			$scope.workExperience.push(wrkEx);
+		};
+		$scope.removeWorkExperience = function () {
+			wExpCounter-=1;
+			$scope.workExperience.pop(); 
 		}
-		$scope.workExperience.push(wrkEx);
-	};
-	$scope.removeWorkExperience = function () {
-		wExpCounter-=1;
-		$scope.workExperience.pop(); 
+		$scope.userDetails = {
+			user: commonService.getUserDetails(),
+			firstname: '',
+			lastname: '',
+			sex: '',
+			dob: '',
+			dateofjoining: '',
+			jobtype: '',
+			domain: '',
+			visastatus: '',
+			streetaddress: '',
+			apthousenumber: '',
+			city: '',
+			state: '',
+			zipcode: '',
+			mobile: '',	
+			email: '',		
+			degree: '',
+			newdegree: '',
+			major: '',
+			newmajor: '',
+			gpa: '',
+			graddate: '',
+			workexperience: $scope.workExperience,	
+			race: '',		
+			veteran: '',					
+			disability: '',		
+			linkedin: '',
+			portfolio: ''	
+		}
+		loadIntakes = function() {
+			var intakes = $resource('/api/register/intakes');
+			intakes.query(function(response){
+				$scope.intakes = response;
+			});
+		}
+		loadStates = function() {		
+			var states = $resource('/api/register/states');
+			states.query(function(response){
+				$scope.states = response;
+			});
+		}
+		loadDegrees = function() {		
+			var degrees = $resource('/api/register/degrees');
+			degrees.query(function(response){
+				$scope.degrees = response;
+			});
+		}
+		loadMajors = function() {		
+			var majors = $resource('/api/register/majors');
+			majors.query(function(response){
+				$scope.majors = response;
+			});
+		}	
+		loadIntakes();
+		loadStates();
+		loadDegrees();
+		loadMajors();
+		$scope.disabilityValues = ['Yes, I have a disability (or previously had a disability)', 
+			'No, I Don’t have a disability', 'I Don’t wish to answer'];
+		$scope.veteranValues = ['I am not a veteran', 'Disabled veteran', 'Recently separated veteran', 
+			'Active wartime or campaign badge veteran', 'Armed forces service medal veteran', 'I am NOT a protected veteran', 
+			'I choose not to identify my veteran status'];
+		$scope.raceValues = ['Hispanic or Latino', 'American Indian or Alaska Native', 'Asian', 'Black or African American', 
+		'Native Hawaiian or Other Pacific Islander', 'White'];		
+		$scope.register = function() {
+			var users = $resource('/api/register/adduser');
+			users.save($scope.userDetails, function(response) {
+				if(response.success) {
+					var userRegister = $resource('/api/authentication/update');
+					userRegister.save({}, function(response1) {
+						if(response1.success) {
+							alert(response1.message);
+							$window.location.href = '/#/userdetails';
+						}
+						else {
+							alert(response1.message);
+						}
+					});				
+				}
+				else {
+					alert(response.message);
+				}
+			});
+		}
 	}
-	$scope.userDetails = {
-		firstname: '',
-		lastname: '',
-		sex: '',
-		dob: '',
-		dateofjoining: '',
-		jobtype: '',
-		domain: '',
-		visastatus: '',
-		streetaddress: '',
-		apthousenumber: '',
-		city: '',
-		state: '',
-		zipcode: '',
-		mobile: '',	
-		email: '',		
-		degree: '',
-		newdegree: '',
-		major: '',
-		newmajor: '',
-		gpa: '',
-		graddate: '',
-		workexperience: $scope.workExperience,	
-		race: '',		
-		veteran: '',					
-		disability: '',		
-		linkedin: '',
-		portfolio: ''	
-	}
-	loadIntakes = function() {
-		var intakes = $resource('/api/register/intakes');
-		intakes.query(function(response){
-			$scope.intakes = response;
-		});
-	}
-	loadStates = function() {		
-		var states = $resource('/api/register/states');
-		states.query(function(response){
-			$scope.states = response;
-		});
-	}
-	loadDegrees = function() {		
-		var degrees = $resource('/api/register/degrees');
-		degrees.query(function(response){
-			$scope.degrees = response;
-		});
-	}
-	loadMajors = function() {		
-		var majors = $resource('/api/register/majors');
-		majors.query(function(response){
-			$scope.majors = response;
-		});
+	else {
+		alert('Please signup/login to add Student details');
 	}	
-	loadIntakes();
-	loadStates();
-	loadDegrees();
-	loadMajors();
-	$scope.disabilityValues = ['Yes, I have a disability (or previously had a disability)', 
-		'No, I Don’t have a disability', 'I Don’t wish to answer'];
-	$scope.veteranValues = ['I am not a veteran', 'Disabled veteran', 'Recently separated veteran', 
-		'Active wartime or campaign badge veteran', 'Armed forces service medal veteran', 'I am NOT a protected veteran', 
-		'I choose not to identify my veteran status'];
-	$scope.raceValues = ['Hispanic or Latino', 'American Indian or Alaska Native', 'Asian', 'Black or African American', 
-	'Native Hawaiian or Other Pacific Islander', 'White'];		
-	$scope.register = function() {
-		var users = $resource('/api/register/adduser');
-		users.save($scope.userDetails, function(response) {
-			if(response.success) {
-				var userRegister = $resource('/api/authentication/update');
-				userRegister.save({}, function(response1) {
-					if(response1.success) {
-						alert(response1.message);
-						$window.location.href = '/#/userdetails';
-					}
-					else {
-						alert(response1.message);
-					}
-				});				
-			}
-			else {
-				alert(response.message);
-			}
-		});
-	}
 }]);
 
-fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeParams', 'commonService', 
-	function($scope, $resource, $routeParams, commonService) {
+fomaautdapp.controller('userDetailsController', ['$scope', '$resource', 'commonService', 
+	function($scope, $resource, commonService) {
 	if(commonService.isLoggedIn()) {
 		var token = commonService.getUserDetails();
 		var user = $resource('/api/userdetails/:id');
@@ -291,64 +303,77 @@ fomaautdapp.controller('userDetailsController', ['$scope', '$resource', '$routeP
 	}		
 }]);
 
-fomaautdapp.controller('updateController', ['$scope', '$resource', '$routeParams', '$window', function($scope, $resource, 
-	$routeParams, $window) {
-	$scope.updateForm = true;
-	$scope.workExperience = [];
-	$scope.addWorkExperience = function () {
-		wExpCounter+=1;
-		var wrkEx = {
-			number: wExpCounter,
-			position: '',
-			company: '',
-			from: '',
-			to: ''
+fomaautdapp.controller('updateController', ['$scope', '$resource', '$window', 'commonService', 
+	function($scope, $resource, $window, commonService) {
+	if(commonService.isLoggedIn()) {
+		$scope.updateForm = true;
+		$scope.workExperience = [];
+		$scope.addWorkExperience = function () {
+			wExpCounter+=1;
+			var wrkEx = {
+				number: wExpCounter,
+				position: '',
+				company: '',
+				from: '',
+				to: ''
+			}
+			$scope.workExperience.push(wrkEx);
+		};
+		$scope.removeWorkExperience = function () {
+			wExpCounter-=1;
+			$scope.workExperience.pop(); 
 		}
-		$scope.workExperience.push(wrkEx);
-	};
-	$scope.removeWorkExperience = function () {
-		wExpCounter-=1;
-		$scope.workExperience.pop(); 
-	}	
-	loadStates = function() {		
-		var states = $resource('/api/register/states');
-		states.query(function(response){
-			$scope.states = response;
-		});
-	}
-	loadDegrees = function() {		
-		var states = $resource('/api/register/degrees');
-		states.query(function(response){
-			$scope.degrees = response;
-		});
-	}
-	loadMajors = function() {		
-		var states = $resource('/api/register/majors');
-		states.query(function(response){
-			$scope.majors = response;
-		});
-	}
-	loadStates();
-	loadDegrees();
-	loadMajors();
-	var user = $resource('/api/userdetails/:id');
-	user.get({id: $routeParams.id}, function(resp) {
-		if(resp.success) {
-			$scope.userDetails = resp.user;
-			angular.forEach(resp.user.workexperience, function(value, key) {			
-				value.from = new Date(value.from);
-				value.to = new Date(value.to);
+		loadIntakes = function() {
+			var intakes = $resource('/api/register/intakes');
+			intakes.query(function(response){
+				$scope.intakes = response;
 			});
-			$scope.workExperience = resp.user.workexperience;
-			$scope.userDetails.dob = new Date($scope.userDetails.dob);
-			$scope.userDetails.dateofjoining = new Date($scope.userDetails.dateofjoining);
-			$scope.userDetails.graddate = new Date($scope.userDetails.graddate);
+		}	
+		loadStates = function() {		
+			var states = $resource('/api/register/states');
+			states.query(function(response){
+				$scope.states = response;
+			});
 		}
-		else {
-			alert(resp.message);
-		}			
-	});
-	$scope.back = function() {
-		$window.location.href = '/#/userdetails';
+		loadDegrees = function() {		
+			var states = $resource('/api/register/degrees');
+			states.query(function(response){
+				$scope.degrees = response;
+			});
+		}
+		loadMajors = function() {		
+			var states = $resource('/api/register/majors');
+			states.query(function(response){
+				$scope.majors = response;
+			});
+		}
+		loadIntakes();
+		loadStates();
+		loadDegrees();
+		loadMajors();
+		var token = commonService.getUserDetails();
+		var user = $resource('/api/userdetails/:id');
+		user.get({id: token._id}, function(resp) {
+			if(resp.success) {
+				$scope.userDetails = resp.user;
+				angular.forEach(resp.user.workexperience, function(value, key) {			
+					value.from = new Date(value.from);
+					value.to = new Date(value.to);
+				});
+				$scope.workExperience = resp.user.workexperience;
+				$scope.userDetails.dob = new Date($scope.userDetails.dob);
+				$scope.userDetails.dateofjoining = new Date($scope.userDetails.dateofjoining);
+				$scope.userDetails.graddate = new Date($scope.userDetails.graddate);
+			}
+			else {
+				alert(resp.message);
+			}			
+		});
+		$scope.back = function() {
+			$window.location.href = '/#/userdetails';
+		}	
+	}
+	else {
+		alert('Please signup/login to add Student details');
 	}	
 }]);

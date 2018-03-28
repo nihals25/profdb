@@ -1,8 +1,6 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('Account');
-global.user = {};
-global.loggedIn = false;
 
 module.exports.userexists = function(req, res) {  
   User.findOne({username : req.body.username}, function(err, account) {
@@ -27,9 +25,7 @@ module.exports.signup = function(req, res) {
   user.setPassword(req.body.password);
   user.save(function(err) {    
     var token;
-    token = user.generateJwt();
-    global.user = user;
-    global.loggedIn = true;    
+    token = user.generateJwt();  
     res.json({
       success: true,
       token : token
@@ -48,9 +44,7 @@ module.exports.login = function(req, res) {
       return;
     }
     if(user){
-      token = user.generateJwt();
-      global.user = user;
-      global.loggedIn = true;           
+      token = user.generateJwt();       
       res.json({
         success: true,
         token: token,
@@ -68,9 +62,7 @@ module.exports.login = function(req, res) {
   })(req, res);
 };
 
-module.exports.logout = function(req, res) {  
-  global.loggedin = false;
-  global.user={};
+module.exports.logout = function(req, res) {
   req.logout();
   res.json({success: true});  
 };
