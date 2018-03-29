@@ -59,8 +59,7 @@ fomaautdapp.factory('commonService', ['$window', function($window) {
 	    },
 	    getUserDetails: _getUserDetails,
 		isLoggedIn: function() {
-		  	var user = _getUserDetails();
-		  	console.log(user);		  	
+		  	var user = _getUserDetails();		  		  
 		  	if (user) {
 		    	return user.exp > Date.now() / 1000;
 		  	} 

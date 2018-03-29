@@ -12,8 +12,7 @@ module.exports.userexists = function(req, res) {
       res.json({result: true});
     else
       res.json({result: false});
-  }); 
-  delete user;
+  });   
 };
 
 module.exports.signup = function(req, res) {
