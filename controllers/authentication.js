@@ -67,10 +67,10 @@ module.exports.logout = function(req, res) {
 };
 
 module.exports.update = function(req, res) {
-   User.findOne({username : global.user.username}, function(err, account) {
+   User.findOne({username : req.body.username}, function(err, account) {
         if(err) throw err;
         User.update({
-          username: global.user.username
+          username: req.body.username
         },{
           $set: {isregistered: true}
         }, function(err, acc) {

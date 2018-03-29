@@ -265,7 +265,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 			users.save($scope.userDetails, function(response) {
 				if(response.success) {
 					var userRegister = $resource('/api/authentication/update');
-					userRegister.save({}, function(response1) {
+					userRegister.save({username: commonService.getUserDetails().username}, function(response1) {
 						if(response1.success) {
 							alert(response1.message);
 							$window.location.href = '/#/userdetails';

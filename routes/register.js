@@ -34,7 +34,7 @@ router.post('/adduser', function(req, res) {
 		isauthenticated: false		
 	}, function(err, userObj) {
 		if (err) throw err;
-		res.json({success: true, message: 'Student details added successfully', id: global.user._id});
+		res.json({success: true, message: 'Student details added successfully'/*, id: global.user._id*/});
 	});
 })
 
