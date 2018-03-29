@@ -20,6 +20,10 @@ body a{
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
+.requiredtext {    
+    color: red !important;
+    font-weight: bold; 
+}
 .login_error_label {
     color: red;
     font-size: 0.8em !important;

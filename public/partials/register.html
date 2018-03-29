@@ -12,9 +12,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <h2 ng-if="!updateForm">Register Form</h2>
         <h2 ng-if="updateForm">Update Form</h2>
         <form name="registerForm" novalidate>
+        	<div class="row">
+	            <div class="form-group col-md-12" class="required">
+	                <label class="col-md-2 control-lable requiredtext" for="firstname">* - Required Fields</label>
+	            </div>
+	        </div>
 	        <div class="row">
-	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="firstname">First Name</label>
+	            <div class="form-group col-md-12" class="required">
+	                <label class="col-md-3 control-lable" for="firstname">First Name <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" name="firstname" ng-model="userDetails.firstname" required="" class="form-control input-sm" />
 	                </div>
@@ -27,7 +32,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>-->
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="lastName">Last Name</label>
+	                <label class="col-md-3 control-lable" for="lastName">Last Name <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" ng-model="userDetails.lastname" ng-required="required" class="form-control input-sm"/>
 	                </div>
@@ -35,7 +40,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="sex">Sex</label>
+	                <label class="col-md-3 control-lable" for="sex">Gender <label class="requiredtext">*</label></label>
 	                <div class="col-md-9" class="form-control input-sm">
 	                    <div class="radios">
 					        <label for="radio-01" class="label_radio">
@@ -50,7 +55,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>  
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="dob" required="">Date of birth</label>
+	                <label class="col-md-3 control-lable" for="dob" required="">Date of birth <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="date" ng-model="userDetails.dob" class="form-control input-sm" required=""/>
 	                </div>
@@ -58,7 +63,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>  
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="dateofjoining" required="">Intake Batch</label>
+	                <label class="col-md-3 control-lable" for="dateofjoining" required="">Intake Batch <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">	                    
 	                    <select ng-options="intake.intake for intake in intakes" ng-model="userDetails.intake" class="form-control input-sm">
 	                    	<option value="">-- Choose Intake --</option>
@@ -76,7 +81,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	  
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="jobtype">Searching For</label>
+	                <label class="col-md-3 control-lable" for="jobtype">Searching For <label class="requiredtext">*</label></label>
 	                <div class="col-md-9" class="form-control input-sm">
 	                    <div class="radios">
 					        <label for="radio-03" class="label_radio">
@@ -91,7 +96,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div> 
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="newintake">Domain of Interest </label>
+	                <label class="col-md-3 control-lable" for="newintake">Domain of Interest</label>
 	                <div class="col-md-9">	                    
 	                    <input type="text" ng-model="userDetails.domain" class="form-control input-sm" required=""/>
 	                </div>
@@ -99,7 +104,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>  
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="visastatus">Visa Status</label>
+	                <label class="col-md-3 control-lable" for="visastatus">Visa Status <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" ng-model="userDetails.visastatus" class="form-control input-sm" required=""/>
 	                </div>
@@ -112,7 +117,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	      
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="streetaddress">Street Address</label>
+	                <label class="col-md-3 control-lable" for="streetaddress">Street Address <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" ng-model="userDetails.streetaddress" class="form-control input-sm" required=""/>
 	                </div>
@@ -128,7 +133,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	   
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="city">City</label>
+	                <label class="col-md-3 control-lable" for="city">City <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" ng-model="userDetails.city" class="form-control input-sm" required=""/>
 	                </div>
@@ -136,7 +141,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	 
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="state">State</label>
+	                <label class="col-md-3 control-lable" for="state">State <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">	                    
 	                    <select class="form-control input-sm" ng-model="userDetails.state" ng-options="state.state for state in states">
 				    		<option value="">-- Choose State --</option>
@@ -146,7 +151,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	       
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="zipcode">Zipcode</label>
+	                <label class="col-md-3 control-lable" for="zipcode">Zipcode <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" ng-model="userDetails.zipcode" class="form-control input-sm" required=""/>
 	                </div>
@@ -154,7 +159,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	        
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="mobile">Mobile Number</label>
+	                <label class="col-md-3 control-lable" for="mobile">Mobile Number <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" ng-model="userDetails.mobile" class="form-control input-sm" required=""/>
 	                </div>
@@ -162,7 +167,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	        
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="email">Email</label>
+	                <label class="col-md-3 control-lable" for="email">Email <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="email" ng-model="userDetails.email" class="form-control input-sm" required=""/>
 	                </div>
@@ -170,12 +175,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div> 
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-12 control-lable register-bolds">Education</label>
+	                <label class="col-md-12 control-lable register-bolds">Education <label class="requiredtext">*</label></label>
 	            </div>
 	        </div>	  
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="degree">Degree</label>
+	                <label class="col-md-3 control-lable" for="degree">Degree <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">	                    
 	                    <select ng-options="degree.degree for degree in degrees" ng-model="userDetails.degree" class="form-control input-sm">
 	                    	<option value="">-- Choose Degree --</option>
@@ -193,7 +198,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="major">Major</label>
+	                <label class="col-md-3 control-lable" for="major">Major <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">	                    
 	                    <select ng-options="major.major for major in majors" ng-model="userDetails.major" class="form-control input-sm">
 	                    	<option value="">-- Choose Major --</option>
@@ -211,7 +216,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>			        	        	      
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="gpa">GPA</label>
+	                <label class="col-md-3 control-lable" for="gpa">GPA <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="text" ng-model="userDetails.gpa" class="form-control input-sm" required=""/>
 	                </div>
@@ -219,7 +224,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>	 
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="graddate">(Expected) Graduation Date</label>
+	                <label class="col-md-3 control-lable" for="graddate">(Expected) Graduation Date <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">
 	                    <input type="date" ng-model="userDetails.graddate" class="form-control input-sm" required=""/>
 	                </div>
@@ -279,12 +284,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div> 		        
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-12 control-lable register-bolds">Others</label>
+	                <label class="col-md-12 control-lable register-bolds">Voluntary Self-Identification</label>
 	            </div>
 	        </div>	
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="disability">Race/Ethnicity</label>
+	                <label class="col-md-3 control-lable" for="disability">Race/Ethnicity <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">	                    
 	                    <select ng-options="value for value in raceValues" ng-model="userDetails.race" class="form-control input-sm">
 	                    	<option value="">-- Choose Status --</option>
@@ -294,7 +299,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>    
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="veteran">Veteran Status</label>
+	                <label class="col-md-3 control-lable" for="veteran">Veteran Status <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">	                    
 	                    <select ng-options="value for value in veteranValues" ng-model="userDetails.veteran" class="form-control input-sm">
 	                    	<option value="">-- Choose Status --</option>
@@ -304,12 +309,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        </div>    
 	        <div class="row">
 	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="disability">Disability</label>
+	                <label class="col-md-3 control-lable" for="disability">Disability <label class="requiredtext">*</label></label>
 	                <div class="col-md-9">	                    
 	                    <select ng-options="value for value in disabilityValues" ng-model="userDetails.disability" class="form-control input-sm">
 	                    	<option value="">-- Choose Status --</option>
 	                    </select>
 	                </div>	                
+	            </div>
+	        </div>	
+	        <div class="row">
+	            <div class="form-group col-md-12">
+	                <label class="col-md-12 control-lable register-bolds">Others</label>
 	            </div>
 	        </div>		           
 	        <div class="row">
