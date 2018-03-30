@@ -14,6 +14,7 @@ var routesApi = require('./routes/routes');
 var index = require('./routes/index');
 var register = require('./routes/register');
 var userdetails = require('./routes/userdetails');
+var file = require('./routes/file');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/', index);
 app.use('/api/authentication', routesApi);
 app.use('/api/register', register);
 app.use('/api/userdetails', userdetails);
+app.use('/api/file', file);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

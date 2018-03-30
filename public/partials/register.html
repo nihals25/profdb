@@ -337,7 +337,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                    <input type="text" ng-model="userDetails.portfolio" class="form-control input-sm"/>
 	                </div>
 	            </div>
-	        </div>	       	        
+	        </div>	
+	        <div class="row">
+	        	<div class="form-group col-md-12">
+	        		<label class="col-md-3 control-lable" for="portfolio">Resume</label> 
+	        		<div class="col-md-9">
+	        			<input type="file" ngf-select ng-model="file" name="file" ngf-pattern=".pdf,.doc,.docx'" accept=".pdf,.doc,.docx" ngf-max-size="3MB" />
+	        		</div>	  
+	        	</div>	        	      
+	        </div>       	        
 	        <div class="row">
 	        	<div class="form-group col-md-12">
 	        		<div class="form-actions floatRight" ng-class="{'col-md-6': updateForm}">

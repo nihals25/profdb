@@ -1,4 +1,4 @@
-var fomaautdapp = angular.module('fomaautdapp', ['ngResource', 'ngRoute']);
+var fomaautdapp = angular.module('fomaautdapp', ['ngResource', 'ngRoute', 'ngFileUpload']);
 
 fomaautdapp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
@@ -174,8 +174,8 @@ fomaautdapp.controller('logoutController', ['$scope', '$resource', '$window', 'c
 	});
 }]);
 
-fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 'commonService', 
-	function($scope, $resource, $window, commonService) {
+fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 'commonService', 'Upload', 
+	function($scope, $resource, $window, commonService, Upload) {
 	if(commonService.isLoggedIn() || true) {
 		var wExpCounter = 0;
 		$scope.updateForm = false;	
@@ -348,6 +348,26 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 			else 
 				return true;			
 		};		
+		var upload = function (file) {
+	        Upload.upload({
+	            url: '/api/file/upload', 
+	            data:{file:file} 
+	        }).then(function (resp) { //upload function returns a promise
+	            if(resp.data.error_code === 0){ //validate success
+	                //$window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+	            } else {
+	                //$window.alert('an error occured');
+	            }
+	        }, function (resp) { //catch error
+	            console.log('Error status: ' + resp.status);
+	            //$window.alert('Error status: ' + resp.status);
+	        }, function (evt) { 
+	            console.log(evt);
+	            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+	            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+	            //$scope.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+        	});
+	    };
 		$scope.register = function() {
 			if(validateForm()) {
 				var users = $resource('/api/register/adduser');
@@ -356,6 +376,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 						var userRegister = $resource('/api/authentication/update');
 						userRegister.save({username: commonService.getUserDetails().username}, function(response1) {
 							if(response1.success) {
+								upload($scope.file)
 								alert(response1.message);
 								$window.location.href = '/#/userdetails';
 							}
