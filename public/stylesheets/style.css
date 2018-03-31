@@ -63,7 +63,7 @@ body a{
 }
 .navbar-brand-height2 {
     height: 100%;
-    padding: 0% 50%;
+    margin-left: 8em;
 }
 .navbar-nav > li > a {
    padding:10px 15px;
@@ -115,7 +115,7 @@ body a{
 	margin-top:3em;
 }
 #search_wrapper {
-	margin-top:8em;
+	margin-top:10em;
 }
 #search_form h1 {
     color: #222f50;

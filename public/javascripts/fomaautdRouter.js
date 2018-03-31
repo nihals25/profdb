@@ -3,7 +3,8 @@ var fomaautdapp = angular.module('fomaautdapp', ['ngResource', 'ngRoute', 'ngFil
 fomaautdapp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'partials/home.html'
+			templateUrl: 'partials/home.html',
+			controller: 'homeController'
 		})
 		.when('/login', {
 			templateUrl: 'partials/login.html',
@@ -74,6 +75,37 @@ fomaautdapp.factory('commonService', ['$window', function($window) {
 	      $window.localStorage.clear();
 	    }
   	}
+}]);
+
+fomaautdapp.controller('homeController', ['$scope', '$resource', function($scope, $resource) {
+	loadIntakes = function() {
+		var intakes = $resource('/api/register/intakes');
+		intakes.query(function(response){
+			$scope.intakes = response;
+		});
+	}
+	loadStates = function() {		
+		var states = $resource('/api/register/states');
+		states.query(function(response){
+			$scope.states = response;
+		});
+	}
+	loadDegrees = function() {		
+		var degrees = $resource('/api/register/degrees');
+		degrees.query(function(response){
+			$scope.degrees = response;
+		});
+	}
+	loadMajors = function() {		
+		var majors = $resource('/api/register/majors');
+		majors.query(function(response){
+			$scope.majors = response;
+		});
+	}	
+	loadIntakes();
+	loadStates();
+	loadDegrees();
+	loadMajors();
 }]);
 
 fomaautdapp.controller('headerController', ['$scope', '$resource', 'commonService', function($scope, $resource, commonService) {
