@@ -116,6 +116,8 @@ body a{
 }
 #search_wrapper {
 	margin-top:10em;
+    width: 15em;
+    float:left;
 }
 #search_form h1 {
     color: #222f50;
