@@ -21,6 +21,7 @@ router.post('/adduser', function(req, res) {
 		state: req.body.state.state,
 		zipcode: req.body.zipcode,
 		mobile: req.body.mobile,
+		email: req.body.email,
 		degree: req.body.degree.degree!='Other'?req.body.degree.degree:req.body.newdegree,
 		major: req.body.major.major!='Other'?req.body.major.major:req.body.newmajor,
 		gpa: req.body.gpa,
@@ -31,7 +32,8 @@ router.post('/adduser', function(req, res) {
 		disability: req.body.disability,			
 		linkedin: req.body.linkedin,
 		portfolio: req.body.portfolio,
-		isauthenticated: false		
+		isauthenticated: false,
+		resumefile: ''		
 	}, function(err, userObj) {
 		if (err) throw err;
 		res.json({success: true, message: 'Student details added successfully'/*, id: global.user._id*/});

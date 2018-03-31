@@ -23,7 +23,7 @@
 	        	</div>
 	        	<div class="row">
 		            <div class="form-group col-md-12">
-		                <label class="col-md-3 control-lable">Sex: </label>
+		                <label class="col-md-3 control-lable">Gender: </label>
 		                <div class="col-md-9">
 		                    <label class="control-lable">{{studentDetail.sex}}</label>
 		                </div>
@@ -39,9 +39,9 @@
 	        	</div>
 	        	<div class="row">
 		            <div class="form-group col-md-12">
-		                <label class="col-md-3 control-lable">Date of Joining UTD: </label>
+		                <label class="col-md-3 control-lable">Joining Batch: </label>
 		                <div class="col-md-9">
-		                    <label class="control-lable">{{studentDetail.dateofjoining | date:'MM/dd/yyyy'}}</label>
+		                    <label class="control-lable">{{studentDetail.intake}}</label>
 		                </div>
 		            </div>
 	        	</div>
@@ -50,6 +50,14 @@
 		                <label class="col-md-3 control-lable">Searching For: </label>
 		                <div class="col-md-9">
 		                    <label required="" class="control-lable">{{studentDetail.jobtype}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row" ng-if="studentDetail.domain != null && studentDetail.domain != ''">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Domain of Interest: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.domain}}</label>
 		                </div>
 		            </div>
 	        	</div>
@@ -198,9 +206,25 @@
 		        		</div>	  
 	        		</div>
 		    	</div>
+		    	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-12 control-lable register-bolds">Voluntary Self-Identification</label>
+		            </div>
+	        	</div>
 	        	<div class="row">
 		            <div class="form-group col-md-12">
-		                <label class="col-md-12 control-lable register-bolds">Others</label>
+		                <label class="col-md-3 control-lable">Race/Ethnicity: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.race}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Veteran Status: </label>
+		                <div class="col-md-9">
+		                    <label required="" class="control-lable">{{studentDetail.veteran}}</label>
+		                </div>
 		            </div>
 	        	</div>
 	        	<div class="row">
@@ -211,14 +235,11 @@
 		                </div>
 		            </div>
 	        	</div>
-	        	<div class="row">
+	        	<div class="row" ng-if="(studentDetail.linkedin!=undefined && studentDetail.linkedin!='')||(studentDetail.portfolio!=undefined && studentDetail.portfolio!='')">
 		            <div class="form-group col-md-12">
-		                <label class="col-md-3 control-lable">Veteran Status: </label>
-		                <div class="col-md-9">
-		                    <label required="" class="control-lable">{{studentDetail.visastatus}}</label>
-		                </div>
+		                <label class="col-md-12 control-lable register-bolds">Others</label>
 		            </div>
-	        	</div>	        	
+	        	</div>	        		        		        
 	        	<div class="row" ng-if="studentDetail.linkedin!=undefined && studentDetail.linkedin!=''">
 		            <div class="form-group col-md-12">
 		                <label class="col-md-3 control-lable">LinkedIn: </label>
@@ -232,6 +253,14 @@
 		                <label class="col-md-3 control-lable">Portfolio: </label>
 		                <div class="col-md-9">
 		                    <label required="" class="control-lable">{{studentDetail.portfolio}}</label>
+		                </div>
+		            </div>
+	        	</div>
+	        	<div class="row">
+		            <div class="form-group col-md-12">
+		                <label class="col-md-3 control-lable">Resume: </label>
+		                <div class="col-md-9">
+		                    <a href="" ng-click="getResume()" class="control-lable">View Your Resume</a>
 		                </div>
 		            </div>
 	        	</div>

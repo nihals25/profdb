@@ -1,4 +1,6 @@
 var express = require('express');
+var monk = require('monk');
+var db = monk('localhost:27017/profdb');
 var router = express.Router();
 var mongoose = require('mongoose');
 var conn = mongoose.connection;
@@ -29,21 +31,44 @@ var upload = multer({
     storage: storage
 }).single('file');
 
-router.post('/upload', function(req, res) {
-	console.log(req);
+router.post('/upload', function(req, res, cb) {
+    var collection = db.get('users');
+    var filename = '';    
+    collection.find({accountid: req.query.userid}, {resumefile: 1}, function(err, name) {
+        if(err) throw err;
+        filename = name;
+    })
+    if(filename !== '') {
+        var files = db.get('fs.files');
+        files.findOne({filename: filename}, function(err, file) {
+            if(err) throw err;
+            db.get('fs.chunks').remove({file_id: file._id}, function(err, result) {
+                if(err) throw err;
+                files.remove({filename: filename}, function (err, res) {
+                    if(err) throw err;
+                });
+            });
+        });
+    }    
     upload(req,res,function(err){
         if(err){
              res.json({error_code:1,err_desc:err});
              return;
-        }
-         res.json({error_code:0,err_desc:null});
+        }        
+        collection.update({accountid: req.query.userid}, {
+            $set: {resumefile: req.file.filename}
+        }, function(err, result) {
+            if(err) throw err;            
+        });
+        res.json({error_code:0,err_desc:null});
     });
 });
 
-router.get('/file/:filename', function(req, res){
-    gfs.collection('ctFiles'); 
-    
-    gfs.files.find({filename: req.params.filename}).toArray(function(err, files){
+router.get('/getfile/:filename', function(req, res) {        
+    gfs.collection('ctFiles');         
+    //console.log(s);    
+    gfs.files.find({filename: '9377367e1987358ad79076fe1326146f'}).toArray(function(err, files) {   
+        console.log(files);     
         if(!files || files.length === 0){
             return res.status(404).json({
                 responseCode: 1,
@@ -54,7 +79,8 @@ router.get('/file/:filename', function(req, res){
             filename: files[0].filename,
             root: "ctFiles"
         });        
-        res.set('Content-Type', files[0].contentType)        
+        res.set('Content-Type', files[0].contentType);
+        console.log(res);        
         return readstream.pipe(res);
     });
 });

@@ -195,8 +195,9 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 			wExpCounter-=1;
 			$scope.workExperience.pop(); 
 		}
+		var token = commonService.getUserDetails();
 		$scope.userDetails = {
-			user: commonService.getUserDetails(),
+			user: token,
 			firstname: '',
 			lastname: '',
 			sex: '',
@@ -348,24 +349,22 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 			else 
 				return true;			
 		};		
-		var upload = function (file) {
+		var upload = function (ifile) {				
+			ifile.userid = token._id;			
 	        Upload.upload({
-	            url: '/api/file/upload', 
-	            data:{file:file} 
-	        }).then(function (resp) { //upload function returns a promise
-	            if(resp.data.error_code === 0){ //validate success
-	                //$window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
-	            } else {
-	                //$window.alert('an error occured');
+	            url: '/api/file/upload',	                        	            	            
+	            params:{'userid': token._id},
+	            file:ifile, 
+	        }).then(function (resp) { 
+	            if(resp.data.error_code === 0){ 	                
+	            } else {	                
 	            }
 	        }, function (resp) { //catch error
-	            console.log('Error status: ' + resp.status);
-	            //$window.alert('Error status: ' + resp.status);
+	            console.log('Error status: ' + resp.status);	            
 	        }, function (evt) { 
 	            console.log(evt);
 	            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-	            //$scope.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+	            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);	            
         	});
 	    };
 		$scope.register = function() {
@@ -374,7 +373,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 				users.save($scope.userDetails, function(response) {
 					if(response.success) {
 						var userRegister = $resource('/api/authentication/update');
-						userRegister.save({username: commonService.getUserDetails().username}, function(response1) {
+						userRegister.save({username: token.username}, function(response1) {
 							if(response1.success) {
 								upload($scope.file)
 								alert(response1.message);
@@ -407,6 +406,13 @@ fomaautdapp.controller('userDetailsController', ['$scope', '$resource', 'commonS
 				$scope.studentDetail = resp.user;
 			}				
 		});
+		$scope.getResume = function() {
+			var resume = $resource('/api/file/getfile/:filename');
+			resume.get({filename: $scope.studentDetail.resumefile}, function(resp) {
+				debugger;
+				console.log(resp);
+			});
+		}
 	}
 	else {
 		alert('Please login to view the details');
