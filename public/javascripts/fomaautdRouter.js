@@ -396,8 +396,8 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 	}	
 }]);
 
-fomaautdapp.controller('userDetailsController', ['$scope', '$resource', 'commonService', 
-	function($scope, $resource, commonService) {
+fomaautdapp.controller('userDetailsController', ['$scope', '$resource', 'commonService', '$http', '$sce',
+	function($scope, $resource, commonService, $http, $sce) {
 	if(commonService.isLoggedIn()) {
 		var token = commonService.getUserDetails();
 		var user = $resource('/api/userdetails/:id');
@@ -407,11 +407,11 @@ fomaautdapp.controller('userDetailsController', ['$scope', '$resource', 'commonS
 			}				
 		});
 		$scope.getResume = function() {
-			var resume = $resource('/api/file/getfile/:filename');
-			resume.get({filename: $scope.studentDetail.resumefile}, function(resp) {
-				debugger;
-				console.log(resp);
-			});
+			$http.get('/api/file/getfile/' + $scope.studentDetail.resumefile, {responseType: 'arraybuffer'})
+			.success(function(resp){
+		      var file = new Blob([resp], {type: 'application/pdf'});
+		      window.open($sce.trustAsResourceUrl(URL.createObjectURL(file)));		      
+		   });			
 		}
 	}
 	else {

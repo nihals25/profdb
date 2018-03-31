@@ -64,24 +64,13 @@ router.post('/upload', function(req, res, cb) {
     });
 });
 
-router.get('/getfile/:filename', function(req, res) {        
-    gfs.collection('ctFiles');         
-    //console.log(s);    
-    gfs.files.find({filename: '9377367e1987358ad79076fe1326146f'}).toArray(function(err, files) {   
-        console.log(files);     
-        if(!files || files.length === 0){
-            return res.status(404).json({
-                responseCode: 1,
-                responseMessage: "error"
-            });
-        }        
+router.get('/getfile/:filename', function(req, res) {            
+    db.get('fs.files').findOne({filename: req.params.filename}, {_id: 1}, function(err, result) {        
         var readstream = gfs.createReadStream({
-            filename: files[0].filename,
-            root: "ctFiles"
-        });        
-        res.set('Content-Type', files[0].contentType);
-        console.log(res);        
-        return readstream.pipe(res);
+            _id: result._id            
+        });
+        res.set('Content-Type', 'application/pdf');
+        return readstream.pipe(res);     
     });
 });
 
