@@ -1,6 +1,5 @@
 var express = require('express');
 var monk = require('monk');
-var objectid = require('mongodb').ObjectID;
 var db = monk('localhost:27017/profdb');
 var router = express.Router();
 

@@ -33,23 +33,24 @@ var upload = multer({
 
 router.post('/upload', function(req, res, cb) {
     var collection = db.get('users');
-    var filename = '';    
-    collection.find({accountid: req.query.userid}, {resumefile: 1}, function(err, name) {
-        if(err) throw err;
-        filename = name;
-    })
-    if(filename !== '') {
-        var files = db.get('fs.files');
-        files.findOne({filename: filename}, function(err, file) {
-            if(err) throw err;
-            db.get('fs.chunks').remove({file_id: file._id}, function(err, result) {
-                if(err) throw err;
-                files.remove({filename: filename}, function (err, res) {
+    var filename = '';        
+    collection.findOne({accountid: req.query.userid}, {resumefile: 1}, function(err, name) {
+        if(err) throw err;                
+        filename = name.resumefile;                 
+        if(filename != '') {            
+            var files = db.get('fs.files');
+            files.findOne({filename: filename}, function(err1, file) {                            
+                if(err) throw err;                                                
+                db.get('fs.chunks').remove({files_id: file._id}, function(err1, result) {
                     if(err) throw err;
+                    //console.log(result);
+                    files.remove({filename: filename}, function (err2, resul) {
+                        if(err) throw err;
+                    });
                 });
             });
-        });
-    }    
+        }
+    })    
     upload(req,res,function(err){
         if(err){
              res.json({error_code:1,err_desc:err});

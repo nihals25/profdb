@@ -34,6 +34,10 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/register.html',
 			controller: 'updateController'	
 		})
+		.when('/resume', {
+			templateUrl: 'partials/updateresume.html',
+			controller: 'updateResumeController'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -224,6 +228,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 		var wExpCounter = 0;
 		$scope.updateForm = false;	
 		$scope.workExperience = [];
+		$scope.file = null;
 		$scope.addWorkExperience = function () {
 			wExpCounter+=1;
 			var wrkEx = {
@@ -393,8 +398,7 @@ fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 
 			else 
 				return true;			
 		};		
-		var upload = function (ifile) {				
-			ifile.userid = token._id;			
+		var upload = function (ifile) {					
 	        Upload.upload({
 	            url: '/api/file/upload',	                        	            	            
 	            params:{'userid': token._id},
@@ -517,7 +521,7 @@ fomaautdapp.controller('updateController', ['$scope', '$resource', '$window', 'c
 			'Active wartime or campaign badge veteran', 'Armed forces service medal veteran', 'I am NOT a protected veteran', 
 			'I choose not to identify my veteran status'];
 		$scope.raceValues = ['Hispanic or Latino', 'American Indian or Alaska Native', 'Asian', 'Black or African American', 
-		'Native Hawaiian or Other Pacific Islander', 'White', 'I Don’t wish to answer'];	
+		'Native Hawaiian or Other Pacific Islander', 'White', 'I don’t wish to answer'];	
 		var token = commonService.getUserDetails();
 		var user = $resource('/api/userdetails/:id');
 		user.get({id: token._id}, function(resp) {
@@ -543,4 +547,34 @@ fomaautdapp.controller('updateController', ['$scope', '$resource', '$window', 'c
 	else {
 		alert('Please signup/login to add Student details');
 	}	
+}]);
+
+fomaautdapp.controller('updateResumeController', ['$scope', '$window', 'commonService', 'Upload', 
+	function($scope, $window, commonService, Upload) {
+	$scope.upload = function () {
+		if(commonService.isLoggedIn()) {
+			var token = commonService.getUserDetails();				
+			$scope.file.userid = token._id;			
+	        Upload.upload({
+	            url: '/api/file/upload',	                        	            	            
+	            params:{'userid': token._id},
+	            file:$scope.file, 
+	        }).then(function (resp) { 
+	            if(resp.data.error_code === 0){ 	            	
+	            	alert('Successfully updated resume');	            		                
+	            	$window.location.href = '/#/userdetails';
+	            } else {	                
+	            }
+	        }, function (resp) { //catch error
+	            console.log('Error status: ' + resp.status);	            
+	        }, function (evt) { 
+	            //console.log(evt);
+	            //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+	            //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);	            
+	    	});
+		}		
+    };
+    $scope.back = function () {
+    	$window.location.href = '/#/userdetails'
+    };
 }]);

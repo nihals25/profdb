@@ -37,21 +37,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                    <input type="text" ng-model="userDetails.lastname" ng-required="required" class="form-control input-sm"/>
 	                </div>
 	            </div>
-	        </div>
-	        <div class="row">
-	            <div class="form-group col-md-12">
-	                <label class="col-md-3 control-lable" for="sex">Gender <label class="requiredtext">*</label></label>
-	                <div class="col-md-9" class="form-control input-sm">
-	                    <div class="radios">
-					        <label for="radio-01" class="label_radio">
-					            <input type="radio" ng-model="userDetails.sex" value="Male" required=""> Male
-					        </label>
-					        <label for="radio-02" class="label_radio">
-					            <input type="radio" ng-model="userDetails.sex" value="Female" required=""> Female
-					        </label>
-		                </div>
-	                </div>
-	            </div>
 	        </div>  
 	        <div class="row">
 	            <div class="form-group col-md-12">
@@ -286,6 +271,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	            <div class="form-group col-md-12">
 	                <label class="col-md-12 control-lable register-bolds">Voluntary Self-Identification</label>
 	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="form-group col-md-12">
+	                <label class="col-md-3 control-lable" for="sex">Gender <label class="requiredtext">*</label></label>
+	                <div class="col-md-9" class="form-control input-sm">
+	                    <div class="radios">
+					        <label for="radio-01" class="label_radio">
+					            <input type="radio" ng-model="userDetails.sex" value="Male" required=""> Male
+					        </label>
+					        <label for="radio-02" class="label_radio">
+					            <input type="radio" ng-model="userDetails.sex" value="Female" required=""> Female
+					        </label>
+					        <label for="radio-03" class="label_radio">
+					            <input type="radio" ng-model="userDetails.sex" value="I don’t wish to answer" required=""> I don’t wish to answer
+					        </label>
+		                </div>
+	                </div>
+	            </div>
 	        </div>	
 	        <div class="row">
 	            <div class="form-group col-md-12">
@@ -338,7 +341,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                </div>
 	            </div>
 	        </div>	
-	        <div class="row">
+	        <div class="row" ng-show="!updateForm">
 	        	<div class="form-group col-md-12">
 	        		<label class="col-md-3 control-lable" for="portfolio">Resume</label> 
 	        		<div class="col-md-9">

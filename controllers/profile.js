@@ -18,7 +18,7 @@ module.exports.profileRead = function(req, res) {
 module.exports.loadHeader = function(req, res) {	
 	var resultArray = [
     	{
-        	href: "/#/update/",
+        	href: "/#/update",
         	tag: 'Update Details' 
       	}, 
       	{
