@@ -12,6 +12,7 @@ require('./config/passport');
 var routesApi = require('./routes/routes');
 
 var index = require('./routes/index');
+var home = require('./routes/home');
 var register = require('./routes/register');
 var userdetails = require('./routes/userdetails');
 var file = require('./routes/file');
@@ -32,6 +33,7 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/api/home', home);
 app.use('/api/authentication', routesApi);
 app.use('/api/register', register);
 app.use('/api/userdetails', userdetails);

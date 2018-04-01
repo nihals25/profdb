@@ -1,0 +1,31 @@
+<div class="banner_1">	
+</div>	
+<div class="container">
+    <div class="single">  
+    	<div class="form-container" ng-if="students.length==0">
+    		<h2>No results found for {{title}}</h2>
+    	</div>
+	   	<div class="form-container" ng-if="students.length>0">        	
+        	<h2>Search results for {{title}}</h2>
+        	<div class="clearfix"></div>
+        	<div>
+        		<table class="table">
+					<thead>
+						<tr>
+							<th scope="col" ng-repeat="hdr in header">{{hdr}}</th>							
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="student in students">
+							<td>{{student.firstname}}</td>
+							<td>{{student.lastname}}</td>
+							<td>{{student.degree}}</td>
+							<td>{{student.jobtype}}</td>
+							<td><a href ng-click="getResume(student.resumefile)">View Resume</a></td>
+						</tr>						
+					</tbody>
+				</table>
+        	</div>
+    	</div>
+	</div>
+</div>

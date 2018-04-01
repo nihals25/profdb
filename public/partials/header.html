@@ -7,16 +7,19 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 	        </button>
-	        <a class="navbar-brand" href="/#/"><img src="images/fomaautd_logo.png" alt="" class="navbar-brand-height"/></a>	            
+	        <a class="navbar-brand" href="/#/"><img src="images/fomaautd_logo.png" alt="" class="navbar-brand-height"/></a>            
 	        <a class="navbar-brand" href="/#/"><img src="images/pdblogo2.png" alt="" class="navbar-brand-height2"/></a>	        
 	        <div class="clearfix"></div>
 	    </div>	    
-	    <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" style="height: 1px;">	    	
-	        <ul class="nav navbar-nav" ng-if="!loggedin">       
+	    <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" style="height: 1px;">	    		    	
+	        <ul class="nav navbar-nav" ng-if="!loggedin"> 
+	        	<li><a href="/#/">Home</a></li>      
 		        <li><a href="/#/login">Login</a></li>
 		        <li><a href="/#/signup">Sign Up</a></li>		        
 	        </ul>
 	        <ul class="nav navbar-nav" ng-if="loggedin">
+	        	<li><a href="/#/">Home</a></li>
+	        	<li><a href="/#/userdetails">User Details</a></li>
 	        	<li class="dropdown">
 		            <a href ng-click="toggleItem($event)" class="dropdown-toggle" data-toggle="dropdown">{{username}}<b class="caret"></b></a>
 		            <ul class="dropdown-menu">

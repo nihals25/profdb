@@ -18,7 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div id="city_1" class="clearfix">
 				<ul class="orange">
-					<li ng-repeat="major in majors"><a href="" ng-if="major.major != 'Other'">{{major.major}}</a></li>			 
+					<li ng-repeat="major in majors"><a href="/#/major/{{major.major}}" ng-if="major.major != 'Other'">{{major.major}}</a></li>			 
 				</ul>			 
 			</div>
        </div>       
@@ -34,7 +34,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div id="city_1" class="clearfix">
 				<ul class="blue">
-					<li ng-repeat="degree in degrees"><a href="" ng-if="degree.degree != 'Other'">{{degree.degree}}</a></li>			 
+					<li ng-repeat="degree in degrees"><a href="/#/degree/{{degree.degree}}" ng-if="degree.degree != 'Other'">{{degree.degree}}</a></li>	 
 				</ul>			 
 			</div>
        </div>

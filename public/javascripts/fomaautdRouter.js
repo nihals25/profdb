@@ -6,6 +6,10 @@ fomaautdapp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'partials/home.html',
 			controller: 'homeController'
 		})
+		.when('/major/:major', {
+			templateUrl: 'partials/studentdata.html',
+			controller: 'studentdataController' 
+		})
 		.when('/login', {
 			templateUrl: 'partials/login.html',
 			controller: 'loginController'		
@@ -78,18 +82,6 @@ fomaautdapp.factory('commonService', ['$window', function($window) {
 }]);
 
 fomaautdapp.controller('homeController', ['$scope', '$resource', function($scope, $resource) {
-	loadIntakes = function() {
-		var intakes = $resource('/api/register/intakes');
-		intakes.query(function(response){
-			$scope.intakes = response;
-		});
-	}
-	loadStates = function() {		
-		var states = $resource('/api/register/states');
-		states.query(function(response){
-			$scope.states = response;
-		});
-	}
 	loadDegrees = function() {		
 		var degrees = $resource('/api/register/degrees');
 		degrees.query(function(response){
@@ -102,10 +94,30 @@ fomaautdapp.controller('homeController', ['$scope', '$resource', function($scope
 			$scope.majors = response;
 		});
 	}	
-	loadIntakes();
-	loadStates();
 	loadDegrees();
-	loadMajors();
+	loadMajors();	
+}]);
+
+fomaautdapp.controller('studentdataController', ['$scope', '$routeParams', '$resource', '$http', '$sce', 
+	function($scope, $routeParams, $resource, $http, $sce) {
+	$scope.title = $routeParams.major != ''? $routeParams.major + ' major' : $routeParams.major + ' degree';
+	var loadMajorStudents = function() {
+		var majorStudents = $resource('/api/home/getstudentsmajor');
+		majorStudents.get({major: $routeParams.major}, function(response) {
+			if(response.success) {
+				$scope.header = response.header;
+				$scope.students = response.students; 
+			}
+		});
+	};
+	$scope.getResume = function(filename) {
+		$http.get('/api/file/getfile/' + filename, {responseType: 'arraybuffer'})
+		.success(function(resp){
+	      var file = new Blob([resp], {type: 'application/pdf'});
+	      window.open($sce.trustAsResourceUrl(URL.createObjectURL(file)));		      
+	   });			
+	};
+	loadMajorStudents();
 }]);
 
 fomaautdapp.controller('headerController', ['$scope', '$resource', 'commonService', function($scope, $resource, commonService) {
