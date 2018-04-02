@@ -224,7 +224,7 @@ fomaautdapp.controller('logoutController', ['$scope', '$resource', '$window', 'c
 
 fomaautdapp.controller('registerController', ['$scope', '$resource', '$window', 'commonService', 'Upload', 
 	function($scope, $resource, $window, commonService, Upload) {
-	if(commonService.isLoggedIn() || true) {
+	if(commonService.isLoggedIn()) {
 		var wExpCounter = 0;
 		$scope.updateForm = false;	
 		$scope.workExperience = [];
